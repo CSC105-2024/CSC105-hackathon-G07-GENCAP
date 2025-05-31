@@ -44,7 +44,7 @@ const router = createBrowserRouter([
     element: <SignUp />
   },
   {
-    path: "/game",
+    path: "/game/:examId/",
     element: <GamePage />
   },
   {

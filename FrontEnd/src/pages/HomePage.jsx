@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { User, ArrowRight, Gamepad2, Trophy, Users, Brain } from "lucide-react";
 import { useNavigate } from "react-router";
-import * as userAPI from "../api/user.api"
+import * as examAPI from "../api/exam.api"
 
 const Homepage = () => {
   const navigate = useNavigate();
   const navigateToGame = () => {
-    navigate("/game");
+    navigate(`/game/${examId}`);
   };
-  const [difficulty, setDifficulty] = useState(null)
-
+  const [examId, setExamId] = useState(0);
   function parseJwt(token) {
     try {
       return JSON.parse(atob(token.split(".")[1]));
@@ -22,12 +21,11 @@ const Homepage = () => {
   const userId = payload ? payload.userId : null;
 
   const handleFetchUserData = async () => {
-    const response = await userAPI.getUserById(userId)
-    setDifficulty(response.data.data.languageLevel)
-    console.log(response.data.data.languageLevel);
+    const response = await examAPI.getExamByUserLevel(userId)
+    setExamId(response.data.data.id)
   }
 
-   useEffect(() => {
+  useEffect(() => {
     handleFetchUserData();
   }, []);
 
