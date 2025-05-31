@@ -71,6 +71,7 @@ model UserExamScore {
 model UserVocabUnlock {
   id               Int             @id @default(autoincrement())
   userExamScoreId Int
-
+  wordId           Int
   userExamScore   UserExamScore   @relation(fields: [userExamScoreId], references: [id])
+
 }
