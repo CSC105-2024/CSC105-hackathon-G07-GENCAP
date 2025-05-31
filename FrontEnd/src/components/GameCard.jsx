@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Trophy } from "lucide-react";
 import { useNavigate } from "react-router";
+import * as questionAPI from "../api/question.api"
 
-const GameCard = ({ slangData, onBackToHome }) => {
+const GameCard = ({ slangData, examId, onBackToHome }) => {
   const navigate = useNavigate();
+  console.log(examId);
 
   const [currentSlangIndex, setCurrentSlangIndex] = useState(0);
   const [showResult, setShowResult] = useState(false);
@@ -12,6 +14,32 @@ const GameCard = ({ slangData, onBackToHome }) => {
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [answerHistory, setAnswerHistory] = useState([]);
   const [userAnswer, setUserAnswer] = useState("");
+  const [questions, setQuestions] = useState([]);
+
+  const handleFetchQuestionData = async () => {
+    const fetchedQuestions = [];
+    for (let i = 1; i <= 10; i++) {
+      try {
+        const response = await questionAPI.getQuestion(examId, i);
+        console.log("Fetched Question", response.data);
+
+        const q = response.data;
+        fetchedQuestions.push({
+          word: q.wordId.word,
+          meaning: q.choice,
+          alternatives: [q.choice2],
+        });
+      } catch (err) {
+        console.error(`Error fetching question ${i}`, err);
+      }
+    }
+    setQuestions(fetchedQuestions);
+  };
+
+
+  useEffect(() => {
+    handleFetchQuestionData();
+  }, []);
 
   const defaultSlangData = [
     { word: "Cool", meaning: "Good", alternatives: ["Bad"] },
@@ -26,17 +54,17 @@ const GameCard = ({ slangData, onBackToHome }) => {
     { word: "Slay", meaning: "Excel", alternatives: ["Kill"] },
   ];
 
-  const currentData = slangData || defaultSlangData;
+  const currentData = questions.length > 0 ? questions : defaultSlangData;
+
 
   const handleNextQuestion = () => {
-    if (!showResult) return; // ต้องตอบก่อนถึงไปข้อถัดไป
+    if (!showResult) return;
 
     if (currentSlangIndex < currentData.length - 1) {
       setCurrentSlangIndex((prev) => prev + 1);
       setUserAnswer("");
       setShowResult(false);
     } else {
-      // ส่งข้อมูลผลลัพธ์ไปหน้า /result พร้อม state
       navigate("/result", {
         state: {
           score,
@@ -160,9 +188,8 @@ const GameCard = ({ slangData, onBackToHome }) => {
         <button
           onClick={handleNextQuestion}
           disabled={!showResult}
-          className={`px-6 py-3 bg-gradient-to-r from-[#CBEA7B] to-[#A5D65A] hover:from-green-600 hover:to-emerald-600 text-white font-semibold rounded-xl transition-all duration-300 ${
-            !showResult ? "opacity-50 cursor-not-allowed" : ""
-          }`}
+          className={`px-6 py-3 bg-gradient-to-r from-[#CBEA7B] to-[#A5D65A] hover:from-green-600 hover:to-emerald-600 text-white font-semibold rounded-xl transition-all duration-300 ${!showResult ? "opacity-50 cursor-not-allowed" : ""
+            }`}
         >
           Next
         </button>
@@ -174,11 +201,10 @@ const GameCard = ({ slangData, onBackToHome }) => {
             Correct Answer: "{currentData[currentSlangIndex]?.meaning}"
           </div>
           <div
-            className={`text-lg ${
-              userAnswer === currentData[currentSlangIndex]?.meaning
-                ? "text-green-400"
-                : "text-red-400"
-            }`}
+            className={`text-lg ${userAnswer === currentData[currentSlangIndex]?.meaning
+              ? "text-green-400"
+              : "text-red-400"
+              }`}
           >
             {userAnswer === currentData[currentSlangIndex]?.meaning ? (
               <div>

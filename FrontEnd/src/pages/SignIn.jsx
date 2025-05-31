@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { ThemeContext } from "../contexts/auth";
 import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Mail, Lock, ArrowRight, Sparkles } from "lucide-react";
 import { z } from "zod";
+import * as userAPI from "../api/user.api"
 
 const SignIn = ({ onSwitchToRegister }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [submittedData, setSubmittedData] = useState(null);
+  const { setAuth } = useContext(ThemeContext);
   const navigate = useNavigate();
 
   const signInSchema = z.object({
@@ -34,12 +38,35 @@ const SignIn = ({ onSwitchToRegister }) => {
 
   const onSubmit = async (data) => {
     setIsLoading(true);
+    try {
+      const response = await userAPI.logIn(data);
+      console.log(response);
+
+      if (response.success) {
+        const token = response.data.data;
+        setAuth(token);
+        console.log("User login:", token);
+        navigate("/"); 
+      } else {
+        console.error("Login failed:", response.msg);
+        setSubmitError(response.msg); // Show error on UI
+      }
+    } catch (error) {
+      console.error("Unexpected error:", error);
+      setSubmitError("An unexpected error occurred.");
+    } finally {
+      setIsLoading(false);
+      setSubmittedData(data);
+    }
   };
 
-  const handleClearError = () => {
+
+
+  const handleClearError = (fieldName) => {
     if (submitError) setSubmitError("");
     if (errors[fieldName]) clearErrors(fieldName);
   };
+
 
   //   const handleSubmit = (e) => {
   //     e.preventDefault();
@@ -106,7 +133,7 @@ const SignIn = ({ onSwitchToRegister }) => {
                       handleClearError("email");
                     }}
                     className="w-full pl-10 sm:pl-12 pr-4 py-2.5 sm:py-3 rounded-lg sm:rounded-xl bg-white/20 border border-white/30 text-white placeholder-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300 text-sm sm:text-base"
-                    placeholder="johndoe@gmail.com"
+                    placeholder="username@gmail.com"
                     required
                   />
                   {errors.email && (
@@ -132,7 +159,7 @@ const SignIn = ({ onSwitchToRegister }) => {
                       handleClearError("password");
                     }}
                     className="w-full pl-10 sm:pl-12 pr-10 sm:pr-12 py-2.5 sm:py-3 rounded-lg sm:rounded-xl bg-white/20 border border-white/30 text-white placeholder-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300 text-sm sm:text-base"
-                    placeholder="••••••••••••••••"
+                    placeholder="Password"
                     required
                   />
                   <button
@@ -158,7 +185,7 @@ const SignIn = ({ onSwitchToRegister }) => {
               <button
                 type="submit"
                 disabled={isLoading}
-                onClick={handleSubmit}
+                onClick={handleSubmit(onSubmit)}
                 className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg sm:rounded-xl font-semibold hover:from-purple-600 hover:to-pink-600 transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center group text-sm sm:text-base"
               >
                 {isLoading ? "Signing In..." : "Sign In"}

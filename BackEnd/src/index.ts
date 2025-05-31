@@ -7,6 +7,12 @@ import { cors } from 'hono/cors'
 const app = new Hono()
 export const db = new PrismaClient()
 
+app.use(
+  cors({
+    origin: ['http://localhost:5173'], //frontend application
+  })
+);
+
 app.get('/', (c) => {
   return c.text('Hello Hono!')
 })
@@ -21,16 +27,9 @@ serve({
 })
 
 db.$connect()
-	.then(() => {
-		console.log("Connected to the database");
-	})
-	.catch((error) => {
-		console.error("Error connecting to the database:", error);
-	});
-
-
-app.use(
-	cors({
-		origin: ['http://localhost:5173'], //frontend application
-	})
-);
+  .then(() => {
+    console.log("Connected to the database");
+  })
+  .catch((error) => {
+    console.error("Error connecting to the database:", error);
+  });
