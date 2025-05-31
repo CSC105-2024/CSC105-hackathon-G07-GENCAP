@@ -1,12 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { User, ArrowRight, Gamepad2, Trophy, Users, Brain } from "lucide-react";
 import { useNavigate } from "react-router";
+import * as examAPI from "../api/exam.api"
 
 const Homepage = () => {
   const navigate = useNavigate();
   const navigateToGame = () => {
-    navigate("/game");
+    navigate(`/game/${examId}`);
   };
+  const [examId, setExamId] = useState(0);
+  function parseJwt(token) {
+    try {
+      return JSON.parse(atob(token.split(".")[1]));
+    } catch (e) {
+      return null;
+    }
+  }
+  const token = localStorage.getItem("token");
+  const payload = parseJwt(token);
+  const userId = payload ? payload.userId : null;
+
+  const handleFetchUserData = async () => {
+    const response = await examAPI.getExamByUserLevel(userId)
+    setExamId(response.data.data.id)
+  }
+
+  useEffect(() => {
+    handleFetchUserData();
+  }, []);
 
   return (
     <div className="min-h-screen font-russo bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 relative overflow-hidden">

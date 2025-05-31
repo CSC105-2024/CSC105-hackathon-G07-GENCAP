@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Eye,
   EyeOff,
@@ -11,12 +12,13 @@ import {
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
-//c
+import * as userAPI from "../api/user.api"
+
 const SignUp = ({ onSwitchToSignIn }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const signUpSchema = z
     .object({
@@ -55,14 +57,29 @@ const SignUp = ({ onSwitchToSignIn }) => {
     },
   });
 
-  // Handle form submission
   const onSubmit = async (data) => {
     setIsLoading(true);
+    try {
+      const { confirmPassword, ...submitData } = data;
+      const response = await userAPI.createUser(submitData);
+
+      if (response.success) {
+        navigate("/");
+      } else {
+        console.error("Registration failed:", response.msg);
+      }
+    } catch (error) {
+      console.error("Unexpected error:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
-  const handleClearError = () => {
-    if (submitError) setSubmitError("");
+
+
+  const handleClearError = (fieldName) => {
     if (errors[fieldName]) clearErrors(fieldName);
   };
+
 
   //   const handleSubmit = (e) => {
   //     e.preventDefault();
@@ -135,8 +152,9 @@ const SignUp = ({ onSwitchToSignIn }) => {
                       register("username").onChange(e);
                       handleClearError("username");
                     }}
+
                     className="w-full pl-10 sm:pl-12 pr-4 py-2.5 sm:py-3 rounded-lg sm:rounded-xl bg-white/20 border border-white/30 text-white placeholder-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300 text-sm sm:text-base"
-                    placeholder="Enter your full name"
+                    placeholder="Enter your username"
                     required
                   />
                   {errors.username && (
@@ -251,7 +269,7 @@ const SignUp = ({ onSwitchToSignIn }) => {
               {/* Submit Button */}
               <button
                 type="submit"
-                onClick={handleSubmit}
+                onClick={handleSubmit(onSubmit)}
                 className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg sm:rounded-xl font-semibold hover:from-purple-600 hover:to-pink-600 transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center group text-sm sm:text-base"
               >
                 {isLoading ? "Creating Account..." : "Sign up"}

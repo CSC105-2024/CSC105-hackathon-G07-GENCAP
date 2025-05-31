@@ -1,19 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import GameCard from '../components/GameCard'
 import { useNavigate } from 'react-router'
-import ShowResult from '../components/ShowResult'
-const GamePage = () => {
-    const navigate = useNavigate();
+import { useParams } from "react-router";
+import * as questionAPI from "../api/question.api"
 
-    const handleBackToHome = () => {
-        navigate("/");
-    }
+const GamePage = () => {
+  const navigate = useNavigate();
+  const { examId } = useParams()
+  const handleBackToHome = () => {
+    navigate("/");
+  }
   return (
     <>
-    <GameCard 
-    //   slangData={yourSlangData} 
-      onBackToHome={handleBackToHome}
-    />
+      <GameCard 
+        examId={examId}
+        onBackToHome={handleBackToHome}
+      />
     </>
   )
 }
