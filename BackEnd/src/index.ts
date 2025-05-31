@@ -1,7 +1,9 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
+import { PrismaClient }
 
 const app = new Hono()
+const db = new PrismaClient()
 
 app.get('/', (c) => {
   return c.text('Hello Hono!')
