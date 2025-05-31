@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model User {
+  id            Int    @id @default(autoincrement())
+  username      String @unique
+  email         String @unique
+  password      String
+  languageLevel String @default("Beginner")
+
+  examScores UserExamScore[]
+}
+
+model Exam {
+  id        Int             @id @default(autoincrement())
+  difficult String
+  questions Question[]
+  scores    UserExamScore[]
+}
+
+model Question {
+  id             Int    @id @default(autoincrement())
+  questionNumber Int
+  question       String
+  examId         Int
+  wordId         Int    @unique
+
+  exam    Exam     @relation(fields: [examId], references: [id])
+  word    Word     @relation(fields: [wordId], references: [id])
+  choices Choice[]
+}
+
+model Word {
+  id      Int    @id @default(autoincrement())
+  word    String
+  meaning String
+  synonym String
+
+  question Question?
+}
+
+model Choice {
+  id         Int     @id @default(autoincrement())
+  choice     String
+  correct    Boolean
+  questionId Int
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+model UserExamScore {
+  id     Int @id @default(autoincrement())
+  userId Int
+  examId Int
+  score  Int @default(0)
+
+  user         User              @relation(fields: [userId], references: [id])
+  exam         Exam              @relation(fields: [examId], references: [id])
+  vocabUnlocks UserVocabUnlock[]
+
+  @@unique([userId, examId])
+}
+
+model UserVocabUnlock {
+  id              Int           @id @default(autoincrement())
+  userExamScoreId Int
+  wordId          Int
+  userExamScore   UserExamScore @relation(fields: [userExamScoreId], references: [id])
+}
