@@ -2,9 +2,18 @@ import { db } from "../index.ts";
 
 export const createExamScore = async (userId: number, examId: number) => {
     return await db.userExamScore.create({
-        data:{
+        data: {
             userId,
             examId
+        }
+    })
+}
+
+export const getExamScore = async (id: number) => {
+    return await db.userExamScore.findUnique({
+        where: { id },
+        select: {
+            score: true
         }
     })
 }
