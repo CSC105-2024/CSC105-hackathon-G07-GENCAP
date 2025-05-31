@@ -20,14 +20,14 @@ const NavBar = () => {
 
   const handleLogout = async () => {
     try {
-        
-        setIsUserSignedIn(false);
-        setShowDropDown(false);
-        navigate('/');
+
+      setIsUserSignedIn(false);
+      setShowDropDown(false);
+      navigate('/');
     } catch (error) {
-        console.error('Error logging out:', error);
+      console.error('Error logging out:', error);
     }
-};
+  };
   // Check screen size for responsive design
   useEffect(() => {
     const checkScreenSize = () => {
@@ -78,22 +78,20 @@ const NavBar = () => {
             <button
               onClick={handleHome}
               className={`text-lg font-medium transition-all duration-300 hover:text-[#ab49de] border-b-2 
-  ${
-    activeLink === "Home"
-      ? "border-purple-900 text-purple-900 cursor-pointer pb-1"
-      : "border-transparent text-gray-400 hover:border-[#ab49de] hover:text-[#ab49de]"
-  } hover:scale-105 focus:outline-none`}
+  ${activeLink === "Home"
+                  ? "border-purple-900 text-purple-900 cursor-pointer pb-1"
+                  : "border-transparent text-gray-400 hover:border-[#ab49de] hover:text-[#ab49de]"
+                } hover:scale-105 focus:outline-none`}
             >
               Home
             </button>
             <button
               onClick={handleVocab}
               className={`text-lg font-medium transition-all duration-300 hover:text-[#ab49de] border-b-2 
-  ${
-    activeLink === "Vocab"
-      ? "border-purple-900 text-purple-900 cursor-pointer pb-1"
-      : "border-transparent text-gray-400 hover:border-[#ab49de] hover:text-[[#ab49de]"
-  } hover:scale-105 focus:outline-none`}
+  ${activeLink === "Vocab"
+                  ? "border-purple-900 text-purple-900 cursor-pointer pb-1"
+                  : "border-transparent text-gray-400 hover:border-[#ab49de] hover:text-[[#ab49de]"
+                } hover:scale-105 focus:outline-none`}
             >
               Vocab
             </button>
@@ -105,9 +103,8 @@ const NavBar = () => {
               <div className="relative">
                 <button
                   onClick={toggleDropDown}
-                  className={`flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-[#CBEA7B] to-[#A5D65A] hover:from-[#A5D65A] hover:to-[#CBEA7B] transition-all duration-300 hover:scale-110 shadow-lg focus:outline-none focus:ring-2 focus:ring-[#CBEA7B]/50 ${
-                    showDropDown ? "ring-2 ring-[#CBEA7B]/70" : ""
-                  }`}
+                  className={`flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-[#CBEA7B] to-[#A5D65A] hover:from-[#A5D65A] hover:to-[#CBEA7B] transition-all duration-300 hover:scale-110 shadow-lg focus:outline-none focus:ring-2 focus:ring-[#CBEA7B]/50 ${showDropDown ? "ring-2 ring-[#CBEA7B]/70" : ""
+                    }`}
                 >
                   <User className="w-5 h-5 text-[#1A3129]" />
                 </button>
@@ -115,11 +112,10 @@ const NavBar = () => {
                 {/* User Dropdown */}
                 <div
                   ref={dropdownRef}
-                  className={`absolute right-0 top-full mt-2 w-48 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border border-white/20 py-2 z-[9999] transform transition-all duration-200 ${
-                    showDropDown
+                  className={`absolute right-0 top-full mt-2 w-48 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border border-white/20 py-2 z-[9999] transform transition-all duration-200 ${showDropDown
                       ? "visible opacity-100 translate-y-0 animate-in slide-in-from-top-2"
                       : "invisible opacity-0 -translate-y-2"
-                  }`}
+                    }`}
                   style={{ zIndex: 9999 }}
                 >
                   <button

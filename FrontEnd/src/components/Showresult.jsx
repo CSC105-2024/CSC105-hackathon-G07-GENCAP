@@ -100,8 +100,8 @@ const ShowResult = () => {
             {percentage >= 80
               ? "You're a Gen Z slang expert! 🎓"
               : percentage >= 60
-              ? "You're getting the hang of it! Keep learning! 📖"
-              : "Don't give up! Practice makes perfect! 💪"}
+                ? "You're getting the hang of it! Keep learning! 📖"
+                : "Don't give up! Practice makes perfect! 💪"}
           </p>
         </div>
       </div>
