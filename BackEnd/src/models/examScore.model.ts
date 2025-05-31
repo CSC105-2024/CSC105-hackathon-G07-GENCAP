@@ -1,26 +1,33 @@
 import { db } from "../index.ts";
+import type { examScore } from "../types/examScore.type.ts";
 
-export const createExamScore = async (userId: number, examId: number) => {
+export const createExamScore = async (examScoreData: examScore) => {
     return await db.userExamScore.create({
         data: {
-            userId,
-            examId
+            ...examScoreData
         }
     })
 }
 
-export const getExamScore = async (id: number) => {
-    return await db.userExamScore.findUnique({
-        where: { id },
+export const getExamScore = async (examScoreData: examScore) => {
+    return await db.userExamScore.findFirst({
+        where: {
+            userId: examScoreData.userId,
+            examId: examScoreData.examId
+        },
         select: {
             score: true
         }
     })
 }
 
-export const increaseScore = async (id: number) => {
+export const increaseScore = async (examScoreData: examScore) => {
     return await db.userExamScore.update({
-        where: { id },
+        where: {
+            userId_examId: {
+                ...examScoreData
+            }
+        },
         data: {
             score: {
                 increment: 1,

@@ -64,6 +64,8 @@ model UserExamScore {
   user         User            @relation(fields: [userId], references: [id])
   exam         Exam            @relation(fields: [examId], references: [id])
   vocabUnlocks UserVocabUnlock[]
+
+  @@unique([userId, examId])
 }
 
 model UserVocabUnlock {
