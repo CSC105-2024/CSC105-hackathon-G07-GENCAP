@@ -5,8 +5,10 @@ import HomePage from './pages/Homepage.jsx';
 import SignIn from './pages/Signin.jsx';
 import SignUp from './pages/SignUp.jsx'
 import VocabPage from './pages/VocabPage.jsx'
+import GamePage from './pages/GamePage.jsx';
 import './index.css'
 import App from './App.jsx'
+import ShowResult from './components/Showresult.jsx';
 
 const router = createBrowserRouter([
   {
@@ -20,7 +22,16 @@ const router = createBrowserRouter([
       {
         path: "/vocab",
         element: <VocabPage/>
-      }
+      },
+      // {
+      //   path: "/game",
+      //   element: <GamePage/>
+      // },
+      // {
+      //   path: "/result",
+      //   element: <ShowResult/>
+      // }
+      
     ]
   },
   {
@@ -30,11 +41,20 @@ const router = createBrowserRouter([
   {
     path: "/signUp",
     element: <SignUp/>
+  },
+  {
+    path: "/game",
+    element: <GamePage/>
+  },
+  {
+    path: "/result",
+    element: <ShowResult/>
   }
+  
 ])
 
 ReactDom.createRoot(document.getElementById("root")).render(
   <StrictMode>
     <RouterProvider router={router} />
   </StrictMode>
-)
+) 
