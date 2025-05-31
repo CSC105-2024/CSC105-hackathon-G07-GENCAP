@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { ThemeContext } from "../contexts/auth";
 import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,6 +12,7 @@ const SignIn = ({ onSwitchToRegister }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [submittedData, setSubmittedData] = useState(null);
+  const { setAuth } = useContext(ThemeContext);
   const navigate = useNavigate();
 
   const signInSchema = z.object({
@@ -41,19 +43,23 @@ const SignIn = ({ onSwitchToRegister }) => {
       console.log(response);
 
       if (response.success) {
-        console.log("User login:", response.data);
-        navigate("/");
+        const token = response.data.data;
+        setAuth(token);
+        console.log("User login:", token);
+        navigate("/"); 
       } else {
         console.error("Login failed:", response.msg);
+        setSubmitError(response.msg); // Show error on UI
       }
     } catch (error) {
       console.error("Unexpected error:", error);
+      setSubmitError("An unexpected error occurred.");
+    } finally {
+      setIsLoading(false);
+      setSubmittedData(data);
     }
-    setSubmitError("");
-    setSubmittedData(data);
-
-    console.log("Form Submitted:", data);
   };
+
 
 
   const handleClearError = (fieldName) => {

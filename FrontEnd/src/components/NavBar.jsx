@@ -1,10 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from "react-router";
 import { User, Menu, X, Settings, LogOut } from "lucide-react";
+import { ThemeContext } from "../contexts/auth";
 const NavBar = () => {
-  const [isUserSignedIn, setIsUserSignedIn] = useState(false);
+  const { isAuth, unAuth } = useContext(ThemeContext);
   const [showDropDown, setShowDropDown] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
 
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
@@ -20,14 +22,14 @@ const NavBar = () => {
 
   const handleLogout = async () => {
     try {
-
-      setIsUserSignedIn(false);
+      unAuth();
       setShowDropDown(false);
       navigate('/');
     } catch (error) {
       console.error('Error logging out:', error);
     }
   };
+
   // Check screen size for responsive design
   useEffect(() => {
     const checkScreenSize = () => {
@@ -98,7 +100,7 @@ const NavBar = () => {
           </div>
 
           <div className="flex items-center">
-            {isUserSignedIn ? (
+            {isAuth ? (
               // Signed In Version
               <div className="relative">
                 <button
@@ -113,8 +115,8 @@ const NavBar = () => {
                 <div
                   ref={dropdownRef}
                   className={`absolute right-0 top-full mt-2 w-48 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border border-white/20 py-2 z-[9999] transform transition-all duration-200 ${showDropDown
-                      ? "visible opacity-100 translate-y-0 animate-in slide-in-from-top-2"
-                      : "invisible opacity-0 -translate-y-2"
+                    ? "visible opacity-100 translate-y-0 animate-in slide-in-from-top-2"
+                    : "invisible opacity-0 -translate-y-2"
                     }`}
                   style={{ zIndex: 9999 }}
                 >

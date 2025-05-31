@@ -1,5 +1,5 @@
 import { StrictMode } from 'react'
-import ReactDom from "react-dom/client";
+import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from 'react-router';
 import HomePage from './pages/Homepage.jsx';
 import SignIn from './pages/Signin.jsx';
@@ -9,19 +9,20 @@ import GamePage from './pages/GamePage.jsx';
 import './index.css'
 import App from './App.jsx'
 import ShowResult from './components/Showresult.jsx';
+import { AuthProvider } from './contexts/auth.jsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/>,
+    element: <App />,
     children: [
       {
         path: "/",
-        element: <HomePage/>
+        element: <HomePage />
       },
       {
         path: "/vocab",
-        element: <VocabPage/>
+        element: <VocabPage />
       },
       // {
       //   path: "/game",
@@ -31,30 +32,32 @@ const router = createBrowserRouter([
       //   path: "/result",
       //   element: <ShowResult/>
       // }
-      
+
     ]
   },
   {
     path: "/signIn",
-    element: <SignIn/>
+    element: <SignIn />
   },
   {
     path: "/signUp",
-    element: <SignUp/>
+    element: <SignUp />
   },
   {
     path: "/game",
-    element: <GamePage/>
+    element: <GamePage />
   },
   {
     path: "/result",
-    element: <ShowResult/>
+    element: <ShowResult />
   }
-  
+
 ])
 
-ReactDom.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>
-) 
+);
