@@ -10,3 +10,5 @@ userRouter.post("/login", userController.login)
 userRouter.get('/:userId', authMiddleware, userController.getUserById)
 userRouter.put('/:userId', authMiddleware, userController.updateUser)
 userRouter.delete('/:userId', authMiddleware, userController.deleteUser)
+
+export default userRouter
