@@ -21,14 +21,20 @@ export const createExam = async (c: Context) => {
     }
 }
 
-export const getExamByDifficult = async (c: Context) => {
+export const getExamByUserLevel = async (c: Context) => {
     try {
-        const difficult = await c.req.json<string>()
-        const response = await examModel.getExamByDifficult(difficult);
+        const userId = parseInt(c.req.param("userId"))
+        if (isNaN(userId)) {
+            return c.json({ message: 'Invalid userId' }, 400);
+        }
+        const response = await examModel.getExamForUser(userId);
+        if (!response) {
+            return c.json({ message: 'User not found' }, 404)
+        }
         return c.json({
             success: true,
             data: response,
-            msg: "Exam fetch successful"
+            msg: "Exam fetch by user language level successful"
         }, 200)
     } catch (e) {
         return c.json({
