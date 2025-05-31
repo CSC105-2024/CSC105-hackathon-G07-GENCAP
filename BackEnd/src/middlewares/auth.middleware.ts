@@ -8,7 +8,11 @@ export const authMiddleware: MiddlewareHandler = async (c, next) => {
   }
 
   const token = authHeader.split(' ')[1]
+  console.log(token);
+  
   const payload = verifyToken(token)
+  console.log(payload);
+  
   if (!payload) {
     return c.json({ message: 'Invalid or expired token' }, 401)
   }

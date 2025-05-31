@@ -110,7 +110,7 @@ export const login = async (c: Context) => {
             return c.json({ message: 'Invalid credentials' }, 401);
         }
         const isValid = await userModel.validatePassword(userData.password, emailExist.password)
-        if(!isValid){
+        if (!isValid) {
             return c.json({ message: 'Invalid credentials' }, 401);
         }
         const token = generateToken(emailExist)
@@ -118,6 +118,30 @@ export const login = async (c: Context) => {
             success: true,
             data: token,
             msg: "User login successful"
+        }, 200)
+    } catch (e) {
+        return c.json({
+            success: false,
+            data: null,
+            msg: `Internal Server Error: ${e}`,
+        }, 500);
+    }
+}
+
+export const levelUp = async (c: Context) => {
+    try {
+        const userId = parseInt(c.req.param("userId"))
+        if (isNaN(userId)) {
+            return c.json({ message: 'Invalid userId' }, 400);
+        }
+        const response = await userModel.levelUp(userId)
+        if(!response){
+            return c.json({ message: 'User not found' }, 404)
+        }
+        return c.json({
+            success: true,
+            data: response,
+            msg: "User language status updated successful"
         }, 200)
     } catch (e) {
         return c.json({

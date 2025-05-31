@@ -1,14 +1,14 @@
 import { Hono } from "hono";
 import * as userController from "../controllers/user.controller.ts"
-import { authMiddleware } from "../middlewares/auth.middleware.ts";
 
 const userRouter = new Hono()
 
 userRouter.post("/register", userController.createUser)
 userRouter.post("/login", userController.login)
 
-userRouter.get('/:userId', authMiddleware, userController.getUserById)
-userRouter.put('/:userId', authMiddleware, userController.updateUser)
-userRouter.delete('/:userId', authMiddleware, userController.deleteUser)
+userRouter.get('/:userId', userController.getUserById)
+userRouter.patch('/:userId', userController.updateUser)
+userRouter.delete('/:userId', userController.deleteUser)
+userRouter.patch("/levelUp/:userId", userController.levelUp)
 
 export default userRouter

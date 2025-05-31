@@ -40,3 +40,35 @@ export const finUserByEmail = async (email: string) => {
 export const validatePassword = async (input: string, hash: string) => {
     return await compare(input, hash)
 }
+
+export const levelUp = async (userId: number) => {
+    const user = await db.user.findUnique({
+        where: { id: userId },
+    })
+    if (!user) {
+        throw new Error("User not found");
+    }
+    let nextLevel = "";
+
+    switch (user.languageLevel) {
+        case "Beginner":
+            nextLevel = "Intermediate";
+            break;
+        case "Intermediate":
+            nextLevel = "Advanced";
+            break;
+        case "Advanced":
+            nextLevel = "Fluent";
+            break;
+        case "Fluent":
+            nextLevel = "Fluent";
+            break;
+        default:
+            nextLevel = "Beginner";
+    }
+
+    return await db.user.update({
+        where: { id: userId },
+        data: { languageLevel: nextLevel },
+    });
+}
