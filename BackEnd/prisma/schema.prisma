@@ -46,8 +46,6 @@ model Word {
   question Question? 
 }
 
-
-
 model Choice {
   id         Int      @id @default(autoincrement())
   choice     String
