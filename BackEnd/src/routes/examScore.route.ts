@@ -5,5 +5,6 @@ const examScoreRouter = new Hono()
 
 examScoreRouter.post("/create", examScoreController.createExamScore)
 examScoreRouter.post("/score", examScoreController.getExamScore)
+examScoreRouter.delete("/delete", examScoreController.deleteExamScore)
 
 export default examScoreRouter

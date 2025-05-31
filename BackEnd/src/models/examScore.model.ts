@@ -36,3 +36,13 @@ export const increaseScore = async (examScoreData: examScore) => {
         },
     });
 };
+
+export const deleteExamScore = async (examScoreData: examScore) => {
+    return await db.userExamScore.delete({
+        where: {
+            userId_examId: {
+                ...examScoreData
+            }
+        }
+    })
+}
