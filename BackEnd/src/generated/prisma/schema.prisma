@@ -16,7 +16,8 @@ model User {
   password      String
   languageLevel String @default("Beginner")
 
-  examScores UserExamScore[]
+  examScores      UserExamScore[]
+  UserVocabUnlock UserVocabUnlock[]
 }
 
 model Exam {
@@ -44,7 +45,8 @@ model Word {
   meaning String
   synonym String
 
-  question Question?
+  question        Question?
+  UserVocabUnlock UserVocabUnlock[]
 }
 
 model Choice {
@@ -62,16 +64,16 @@ model UserExamScore {
   examId Int
   score  Int @default(0)
 
-  user         User              @relation(fields: [userId], references: [id])
-  exam         Exam              @relation(fields: [examId], references: [id])
-  vocabUnlocks UserVocabUnlock[]
+  user User @relation(fields: [userId], references: [id])
+  exam Exam @relation(fields: [examId], references: [id])
 
   @@unique([userId, examId])
 }
 
 model UserVocabUnlock {
-  id              Int           @id @default(autoincrement())
-  userExamScoreId Int
-  wordId          Int
-  userExamScore   UserExamScore @relation(fields: [userExamScoreId], references: [id])
+  id                  Int  @id @default(autoincrement())
+  userId              Int
+  wordId              Int
+  UserUnlockWord      User @relation(fields: [userId], references: [id])
+  UserVocabUnlockWord Word @relation(fields: [wordId], references: [id])
 }

@@ -37,8 +37,7 @@ export const createWord = async (c: Context) => {
 
 export const getUnlockedWordsByUser = async (c: Context) => {
   try {
-    const { userId } = await c.req.json<{ userId: number }>();
-
+    const userId = parseInt(c.req.param("userId"))
     const response = await VocabModels.getUnlockedWordsByUser(userId);
 
     return c.json(
@@ -60,5 +59,39 @@ export const getUnlockedWordsByUser = async (c: Context) => {
     );
   }
 };
+
+export const wordTransferController = async (c:Context) => {
+  try {
+    const wordq = await c.req.json<{
+      userId:number,
+      questionId:number
+    }>();
+
+    const response = await VocabModels.wordTransfertoUnlockWord(
+      wordq.userId,
+      wordq.questionId
+    )
+
+    return c.json(
+      {
+        success: true,
+        data: response,
+        msg: "Word transfer successfully",
+      },
+      200
+    );
+
+  } catch (e) {
+    return c.json(
+      {
+        success: false,
+        data: null,
+        msg: `Internal Server Error: ${e}`,
+      },
+      500
+    );
+  }
+}
+
 
 

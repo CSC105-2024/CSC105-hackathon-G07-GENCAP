@@ -23,27 +23,37 @@ export const createWord = async (word: string,meaning: string,synonym: string) =
 };
 
 export const getUnlockedWordsByUser = async (userId: number) => {
-  const unlockedWords = await db.word.findMany({
+  const unlockedWords = await db.userVocabUnlock.findMany({
     where: {
-      id: {
-        in: (
-          await db.userVocabUnlock.findMany({
-            where: {
-              userExamScore: {
-                userId: userId,
-              },
-            },
-            select: {
-              wordId: true,
-            },
-          })
-        ).map((unlock) => unlock.wordId),
-      },
+      userId
     },
-  });
+    include: {
+       UserVocabUnlockWord: true
+    }
+  })
 
   return unlockedWords;
 };
+
+export const wordTransfertoUnlockWord = async (userId:number,questionId:number) => {
+  const trans = await db.question.findUnique({
+    where : {
+      id:questionId
+    },
+    select:{
+      wordId: true
+    }
+  })
+  if (!trans) {
+    throw new Error("Question not found");
+  }
+  const transferWord = await db.userVocabUnlock.create({
+    data:{
+      userId,
+      wordId:trans.wordId
+    }
+  })
+}
 
 
 

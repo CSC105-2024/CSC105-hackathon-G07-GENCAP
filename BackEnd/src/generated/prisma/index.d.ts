@@ -1360,10 +1360,12 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     examScores: number
+    UserVocabUnlock: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     examScores?: boolean | UserCountOutputTypeCountExamScoresArgs
+    UserVocabUnlock?: boolean | UserCountOutputTypeCountUserVocabUnlockArgs
   }
 
   // Custom InputTypes
@@ -1382,6 +1384,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountExamScoresArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserExamScoreWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountUserVocabUnlockArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserVocabUnlockWhereInput
   }
 
 
@@ -1457,32 +1466,32 @@ export namespace Prisma {
 
 
   /**
-   * Count Type UserExamScoreCountOutputType
+   * Count Type WordCountOutputType
    */
 
-  export type UserExamScoreCountOutputType = {
-    vocabUnlocks: number
+  export type WordCountOutputType = {
+    UserVocabUnlock: number
   }
 
-  export type UserExamScoreCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    vocabUnlocks?: boolean | UserExamScoreCountOutputTypeCountVocabUnlocksArgs
+  export type WordCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    UserVocabUnlock?: boolean | WordCountOutputTypeCountUserVocabUnlockArgs
   }
 
   // Custom InputTypes
   /**
-   * UserExamScoreCountOutputType without action
+   * WordCountOutputType without action
    */
-  export type UserExamScoreCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type WordCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserExamScoreCountOutputType
+     * Select specific fields to fetch from the WordCountOutputType
      */
-    select?: UserExamScoreCountOutputTypeSelect<ExtArgs> | null
+    select?: WordCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * UserExamScoreCountOutputType without action
+   * WordCountOutputType without action
    */
-  export type UserExamScoreCountOutputTypeCountVocabUnlocksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type WordCountOutputTypeCountUserVocabUnlockArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserVocabUnlockWhereInput
   }
 
@@ -1690,6 +1699,7 @@ export namespace Prisma {
     password?: boolean
     languageLevel?: boolean
     examScores?: boolean | User$examScoresArgs<ExtArgs>
+    UserVocabUnlock?: boolean | User$UserVocabUnlockArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1706,6 +1716,7 @@ export namespace Prisma {
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "email" | "password" | "languageLevel", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     examScores?: boolean | User$examScoresArgs<ExtArgs>
+    UserVocabUnlock?: boolean | User$UserVocabUnlockArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -1713,6 +1724,7 @@ export namespace Prisma {
     name: "User"
     objects: {
       examScores: Prisma.$UserExamScorePayload<ExtArgs>[]
+      UserVocabUnlock: Prisma.$UserVocabUnlockPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -2061,6 +2073,7 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     examScores<T extends User$examScoresArgs<ExtArgs> = {}>(args?: Subset<T, User$examScoresArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserExamScorePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    UserVocabUnlock<T extends User$UserVocabUnlockArgs<ExtArgs> = {}>(args?: Subset<T, User$UserVocabUnlockArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserVocabUnlockPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2459,6 +2472,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UserExamScoreScalarFieldEnum | UserExamScoreScalarFieldEnum[]
+  }
+
+  /**
+   * User.UserVocabUnlock
+   */
+  export type User$UserVocabUnlockArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserVocabUnlock
+     */
+    select?: UserVocabUnlockSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserVocabUnlock
+     */
+    omit?: UserVocabUnlockOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserVocabUnlockInclude<ExtArgs> | null
+    where?: UserVocabUnlockWhereInput
+    orderBy?: UserVocabUnlockOrderByWithRelationInput | UserVocabUnlockOrderByWithRelationInput[]
+    cursor?: UserVocabUnlockWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserVocabUnlockScalarFieldEnum | UserVocabUnlockScalarFieldEnum[]
   }
 
   /**
@@ -4664,6 +4701,8 @@ export namespace Prisma {
     meaning?: boolean
     synonym?: boolean
     question?: boolean | Word$questionArgs<ExtArgs>
+    UserVocabUnlock?: boolean | Word$UserVocabUnlockArgs<ExtArgs>
+    _count?: boolean | WordCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["word"]>
 
 
@@ -4678,12 +4717,15 @@ export namespace Prisma {
   export type WordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "word" | "meaning" | "synonym", ExtArgs["result"]["word"]>
   export type WordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     question?: boolean | Word$questionArgs<ExtArgs>
+    UserVocabUnlock?: boolean | Word$UserVocabUnlockArgs<ExtArgs>
+    _count?: boolean | WordCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $WordPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Word"
     objects: {
       question: Prisma.$QuestionPayload<ExtArgs> | null
+      UserVocabUnlock: Prisma.$UserVocabUnlockPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -5031,6 +5073,7 @@ export namespace Prisma {
   export interface Prisma__WordClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     question<T extends Word$questionArgs<ExtArgs> = {}>(args?: Subset<T, Word$questionArgs<ExtArgs>>): Prisma__QuestionClient<$Result.GetResult<Prisma.$QuestionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    UserVocabUnlock<T extends Word$UserVocabUnlockArgs<ExtArgs> = {}>(args?: Subset<T, Word$UserVocabUnlockArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserVocabUnlockPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5423,6 +5466,30 @@ export namespace Prisma {
      */
     include?: QuestionInclude<ExtArgs> | null
     where?: QuestionWhereInput
+  }
+
+  /**
+   * Word.UserVocabUnlock
+   */
+  export type Word$UserVocabUnlockArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserVocabUnlock
+     */
+    select?: UserVocabUnlockSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserVocabUnlock
+     */
+    omit?: UserVocabUnlockOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserVocabUnlockInclude<ExtArgs> | null
+    where?: UserVocabUnlockWhereInput
+    orderBy?: UserVocabUnlockOrderByWithRelationInput | UserVocabUnlockOrderByWithRelationInput[]
+    cursor?: UserVocabUnlockWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserVocabUnlockScalarFieldEnum | UserVocabUnlockScalarFieldEnum[]
   }
 
   /**
@@ -6604,8 +6671,6 @@ export namespace Prisma {
     score?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     exam?: boolean | ExamDefaultArgs<ExtArgs>
-    vocabUnlocks?: boolean | UserExamScore$vocabUnlocksArgs<ExtArgs>
-    _count?: boolean | UserExamScoreCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userExamScore"]>
 
 
@@ -6621,8 +6686,6 @@ export namespace Prisma {
   export type UserExamScoreInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     exam?: boolean | ExamDefaultArgs<ExtArgs>
-    vocabUnlocks?: boolean | UserExamScore$vocabUnlocksArgs<ExtArgs>
-    _count?: boolean | UserExamScoreCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $UserExamScorePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6630,7 +6693,6 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       exam: Prisma.$ExamPayload<ExtArgs>
-      vocabUnlocks: Prisma.$UserVocabUnlockPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -6979,7 +7041,6 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     exam<T extends ExamDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ExamDefaultArgs<ExtArgs>>): Prisma__ExamClient<$Result.GetResult<Prisma.$ExamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    vocabUnlocks<T extends UserExamScore$vocabUnlocksArgs<ExtArgs> = {}>(args?: Subset<T, UserExamScore$vocabUnlocksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserVocabUnlockPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7356,30 +7417,6 @@ export namespace Prisma {
   }
 
   /**
-   * UserExamScore.vocabUnlocks
-   */
-  export type UserExamScore$vocabUnlocksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserVocabUnlock
-     */
-    select?: UserVocabUnlockSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserVocabUnlock
-     */
-    omit?: UserVocabUnlockOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserVocabUnlockInclude<ExtArgs> | null
-    where?: UserVocabUnlockWhereInput
-    orderBy?: UserVocabUnlockOrderByWithRelationInput | UserVocabUnlockOrderByWithRelationInput[]
-    cursor?: UserVocabUnlockWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: UserVocabUnlockScalarFieldEnum | UserVocabUnlockScalarFieldEnum[]
-  }
-
-  /**
    * UserExamScore without action
    */
   export type UserExamScoreDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7412,31 +7449,31 @@ export namespace Prisma {
 
   export type UserVocabUnlockAvgAggregateOutputType = {
     id: number | null
-    userExamScoreId: number | null
+    userId: number | null
     wordId: number | null
   }
 
   export type UserVocabUnlockSumAggregateOutputType = {
     id: number | null
-    userExamScoreId: number | null
+    userId: number | null
     wordId: number | null
   }
 
   export type UserVocabUnlockMinAggregateOutputType = {
     id: number | null
-    userExamScoreId: number | null
+    userId: number | null
     wordId: number | null
   }
 
   export type UserVocabUnlockMaxAggregateOutputType = {
     id: number | null
-    userExamScoreId: number | null
+    userId: number | null
     wordId: number | null
   }
 
   export type UserVocabUnlockCountAggregateOutputType = {
     id: number
-    userExamScoreId: number
+    userId: number
     wordId: number
     _all: number
   }
@@ -7444,31 +7481,31 @@ export namespace Prisma {
 
   export type UserVocabUnlockAvgAggregateInputType = {
     id?: true
-    userExamScoreId?: true
+    userId?: true
     wordId?: true
   }
 
   export type UserVocabUnlockSumAggregateInputType = {
     id?: true
-    userExamScoreId?: true
+    userId?: true
     wordId?: true
   }
 
   export type UserVocabUnlockMinAggregateInputType = {
     id?: true
-    userExamScoreId?: true
+    userId?: true
     wordId?: true
   }
 
   export type UserVocabUnlockMaxAggregateInputType = {
     id?: true
-    userExamScoreId?: true
+    userId?: true
     wordId?: true
   }
 
   export type UserVocabUnlockCountAggregateInputType = {
     id?: true
-    userExamScoreId?: true
+    userId?: true
     wordId?: true
     _all?: true
   }
@@ -7561,7 +7598,7 @@ export namespace Prisma {
 
   export type UserVocabUnlockGroupByOutputType = {
     id: number
-    userExamScoreId: number
+    userId: number
     wordId: number
     _count: UserVocabUnlockCountAggregateOutputType | null
     _avg: UserVocabUnlockAvgAggregateOutputType | null
@@ -7586,32 +7623,35 @@ export namespace Prisma {
 
   export type UserVocabUnlockSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    userExamScoreId?: boolean
+    userId?: boolean
     wordId?: boolean
-    userExamScore?: boolean | UserExamScoreDefaultArgs<ExtArgs>
+    UserUnlockWord?: boolean | UserDefaultArgs<ExtArgs>
+    UserVocabUnlockWord?: boolean | WordDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userVocabUnlock"]>
 
 
 
   export type UserVocabUnlockSelectScalar = {
     id?: boolean
-    userExamScoreId?: boolean
+    userId?: boolean
     wordId?: boolean
   }
 
-  export type UserVocabUnlockOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userExamScoreId" | "wordId", ExtArgs["result"]["userVocabUnlock"]>
+  export type UserVocabUnlockOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "wordId", ExtArgs["result"]["userVocabUnlock"]>
   export type UserVocabUnlockInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    userExamScore?: boolean | UserExamScoreDefaultArgs<ExtArgs>
+    UserUnlockWord?: boolean | UserDefaultArgs<ExtArgs>
+    UserVocabUnlockWord?: boolean | WordDefaultArgs<ExtArgs>
   }
 
   export type $UserVocabUnlockPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "UserVocabUnlock"
     objects: {
-      userExamScore: Prisma.$UserExamScorePayload<ExtArgs>
+      UserUnlockWord: Prisma.$UserPayload<ExtArgs>
+      UserVocabUnlockWord: Prisma.$WordPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      userExamScoreId: number
+      userId: number
       wordId: number
     }, ExtArgs["result"]["userVocabUnlock"]>
     composites: {}
@@ -7953,7 +7993,8 @@ export namespace Prisma {
    */
   export interface Prisma__UserVocabUnlockClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    userExamScore<T extends UserExamScoreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserExamScoreDefaultArgs<ExtArgs>>): Prisma__UserExamScoreClient<$Result.GetResult<Prisma.$UserExamScorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    UserUnlockWord<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    UserVocabUnlockWord<T extends WordDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WordDefaultArgs<ExtArgs>>): Prisma__WordClient<$Result.GetResult<Prisma.$WordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7984,7 +8025,7 @@ export namespace Prisma {
    */
   interface UserVocabUnlockFieldRefs {
     readonly id: FieldRef<"UserVocabUnlock", 'Int'>
-    readonly userExamScoreId: FieldRef<"UserVocabUnlock", 'Int'>
+    readonly userId: FieldRef<"UserVocabUnlock", 'Int'>
     readonly wordId: FieldRef<"UserVocabUnlock", 'Int'>
   }
     
@@ -8423,7 +8464,7 @@ export namespace Prisma {
 
   export const UserVocabUnlockScalarFieldEnum: {
     id: 'id',
-    userExamScoreId: 'userExamScoreId',
+    userId: 'userId',
     wordId: 'wordId'
   };
 
@@ -8524,6 +8565,7 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     languageLevel?: StringFilter<"User"> | string
     examScores?: UserExamScoreListRelationFilter
+    UserVocabUnlock?: UserVocabUnlockListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -8533,6 +8575,7 @@ export namespace Prisma {
     password?: SortOrder
     languageLevel?: SortOrder
     examScores?: UserExamScoreOrderByRelationAggregateInput
+    UserVocabUnlock?: UserVocabUnlockOrderByRelationAggregateInput
     _relevance?: UserOrderByRelevanceInput
   }
 
@@ -8546,6 +8589,7 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     languageLevel?: StringFilter<"User"> | string
     examScores?: UserExamScoreListRelationFilter
+    UserVocabUnlock?: UserVocabUnlockListRelationFilter
   }, "id" | "username" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -8691,6 +8735,7 @@ export namespace Prisma {
     meaning?: StringFilter<"Word"> | string
     synonym?: StringFilter<"Word"> | string
     question?: XOR<QuestionNullableScalarRelationFilter, QuestionWhereInput> | null
+    UserVocabUnlock?: UserVocabUnlockListRelationFilter
   }
 
   export type WordOrderByWithRelationInput = {
@@ -8699,6 +8744,7 @@ export namespace Prisma {
     meaning?: SortOrder
     synonym?: SortOrder
     question?: QuestionOrderByWithRelationInput
+    UserVocabUnlock?: UserVocabUnlockOrderByRelationAggregateInput
     _relevance?: WordOrderByRelevanceInput
   }
 
@@ -8711,6 +8757,7 @@ export namespace Prisma {
     meaning?: StringFilter<"Word"> | string
     synonym?: StringFilter<"Word"> | string
     question?: XOR<QuestionNullableScalarRelationFilter, QuestionWhereInput> | null
+    UserVocabUnlock?: UserVocabUnlockListRelationFilter
   }, "id">
 
   export type WordOrderByWithAggregationInput = {
@@ -8798,7 +8845,6 @@ export namespace Prisma {
     score?: IntFilter<"UserExamScore"> | number
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     exam?: XOR<ExamScalarRelationFilter, ExamWhereInput>
-    vocabUnlocks?: UserVocabUnlockListRelationFilter
   }
 
   export type UserExamScoreOrderByWithRelationInput = {
@@ -8808,7 +8854,6 @@ export namespace Prisma {
     score?: SortOrder
     user?: UserOrderByWithRelationInput
     exam?: ExamOrderByWithRelationInput
-    vocabUnlocks?: UserVocabUnlockOrderByRelationAggregateInput
   }
 
   export type UserExamScoreWhereUniqueInput = Prisma.AtLeast<{
@@ -8822,7 +8867,6 @@ export namespace Prisma {
     score?: IntFilter<"UserExamScore"> | number
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     exam?: XOR<ExamScalarRelationFilter, ExamWhereInput>
-    vocabUnlocks?: UserVocabUnlockListRelationFilter
   }, "id" | "userId_examId">
 
   export type UserExamScoreOrderByWithAggregationInput = {
@@ -8852,16 +8896,18 @@ export namespace Prisma {
     OR?: UserVocabUnlockWhereInput[]
     NOT?: UserVocabUnlockWhereInput | UserVocabUnlockWhereInput[]
     id?: IntFilter<"UserVocabUnlock"> | number
-    userExamScoreId?: IntFilter<"UserVocabUnlock"> | number
+    userId?: IntFilter<"UserVocabUnlock"> | number
     wordId?: IntFilter<"UserVocabUnlock"> | number
-    userExamScore?: XOR<UserExamScoreScalarRelationFilter, UserExamScoreWhereInput>
+    UserUnlockWord?: XOR<UserScalarRelationFilter, UserWhereInput>
+    UserVocabUnlockWord?: XOR<WordScalarRelationFilter, WordWhereInput>
   }
 
   export type UserVocabUnlockOrderByWithRelationInput = {
     id?: SortOrder
-    userExamScoreId?: SortOrder
+    userId?: SortOrder
     wordId?: SortOrder
-    userExamScore?: UserExamScoreOrderByWithRelationInput
+    UserUnlockWord?: UserOrderByWithRelationInput
+    UserVocabUnlockWord?: WordOrderByWithRelationInput
   }
 
   export type UserVocabUnlockWhereUniqueInput = Prisma.AtLeast<{
@@ -8869,14 +8915,15 @@ export namespace Prisma {
     AND?: UserVocabUnlockWhereInput | UserVocabUnlockWhereInput[]
     OR?: UserVocabUnlockWhereInput[]
     NOT?: UserVocabUnlockWhereInput | UserVocabUnlockWhereInput[]
-    userExamScoreId?: IntFilter<"UserVocabUnlock"> | number
+    userId?: IntFilter<"UserVocabUnlock"> | number
     wordId?: IntFilter<"UserVocabUnlock"> | number
-    userExamScore?: XOR<UserExamScoreScalarRelationFilter, UserExamScoreWhereInput>
+    UserUnlockWord?: XOR<UserScalarRelationFilter, UserWhereInput>
+    UserVocabUnlockWord?: XOR<WordScalarRelationFilter, WordWhereInput>
   }, "id">
 
   export type UserVocabUnlockOrderByWithAggregationInput = {
     id?: SortOrder
-    userExamScoreId?: SortOrder
+    userId?: SortOrder
     wordId?: SortOrder
     _count?: UserVocabUnlockCountOrderByAggregateInput
     _avg?: UserVocabUnlockAvgOrderByAggregateInput
@@ -8890,7 +8937,7 @@ export namespace Prisma {
     OR?: UserVocabUnlockScalarWhereWithAggregatesInput[]
     NOT?: UserVocabUnlockScalarWhereWithAggregatesInput | UserVocabUnlockScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"UserVocabUnlock"> | number
-    userExamScoreId?: IntWithAggregatesFilter<"UserVocabUnlock"> | number
+    userId?: IntWithAggregatesFilter<"UserVocabUnlock"> | number
     wordId?: IntWithAggregatesFilter<"UserVocabUnlock"> | number
   }
 
@@ -8900,6 +8947,7 @@ export namespace Prisma {
     password: string
     languageLevel?: string
     examScores?: UserExamScoreCreateNestedManyWithoutUserInput
+    UserVocabUnlock?: UserVocabUnlockCreateNestedManyWithoutUserUnlockWordInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -8909,6 +8957,7 @@ export namespace Prisma {
     password: string
     languageLevel?: string
     examScores?: UserExamScoreUncheckedCreateNestedManyWithoutUserInput
+    UserVocabUnlock?: UserVocabUnlockUncheckedCreateNestedManyWithoutUserUnlockWordInput
   }
 
   export type UserUpdateInput = {
@@ -8917,6 +8966,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     languageLevel?: StringFieldUpdateOperationsInput | string
     examScores?: UserExamScoreUpdateManyWithoutUserNestedInput
+    UserVocabUnlock?: UserVocabUnlockUpdateManyWithoutUserUnlockWordNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -8926,6 +8976,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     languageLevel?: StringFieldUpdateOperationsInput | string
     examScores?: UserExamScoreUncheckedUpdateManyWithoutUserNestedInput
+    UserVocabUnlock?: UserVocabUnlockUncheckedUpdateManyWithoutUserUnlockWordNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -9051,6 +9102,7 @@ export namespace Prisma {
     meaning: string
     synonym: string
     question?: QuestionCreateNestedOneWithoutWordInput
+    UserVocabUnlock?: UserVocabUnlockCreateNestedManyWithoutUserVocabUnlockWordInput
   }
 
   export type WordUncheckedCreateInput = {
@@ -9059,6 +9111,7 @@ export namespace Prisma {
     meaning: string
     synonym: string
     question?: QuestionUncheckedCreateNestedOneWithoutWordInput
+    UserVocabUnlock?: UserVocabUnlockUncheckedCreateNestedManyWithoutUserVocabUnlockWordInput
   }
 
   export type WordUpdateInput = {
@@ -9066,6 +9119,7 @@ export namespace Prisma {
     meaning?: StringFieldUpdateOperationsInput | string
     synonym?: StringFieldUpdateOperationsInput | string
     question?: QuestionUpdateOneWithoutWordNestedInput
+    UserVocabUnlock?: UserVocabUnlockUpdateManyWithoutUserVocabUnlockWordNestedInput
   }
 
   export type WordUncheckedUpdateInput = {
@@ -9074,6 +9128,7 @@ export namespace Prisma {
     meaning?: StringFieldUpdateOperationsInput | string
     synonym?: StringFieldUpdateOperationsInput | string
     question?: QuestionUncheckedUpdateOneWithoutWordNestedInput
+    UserVocabUnlock?: UserVocabUnlockUncheckedUpdateManyWithoutUserVocabUnlockWordNestedInput
   }
 
   export type WordCreateManyInput = {
@@ -9145,7 +9200,6 @@ export namespace Prisma {
     score?: number
     user: UserCreateNestedOneWithoutExamScoresInput
     exam: ExamCreateNestedOneWithoutScoresInput
-    vocabUnlocks?: UserVocabUnlockCreateNestedManyWithoutUserExamScoreInput
   }
 
   export type UserExamScoreUncheckedCreateInput = {
@@ -9153,14 +9207,12 @@ export namespace Prisma {
     userId: number
     examId: number
     score?: number
-    vocabUnlocks?: UserVocabUnlockUncheckedCreateNestedManyWithoutUserExamScoreInput
   }
 
   export type UserExamScoreUpdateInput = {
     score?: IntFieldUpdateOperationsInput | number
     user?: UserUpdateOneRequiredWithoutExamScoresNestedInput
     exam?: ExamUpdateOneRequiredWithoutScoresNestedInput
-    vocabUnlocks?: UserVocabUnlockUpdateManyWithoutUserExamScoreNestedInput
   }
 
   export type UserExamScoreUncheckedUpdateInput = {
@@ -9168,7 +9220,6 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     examId?: IntFieldUpdateOperationsInput | number
     score?: IntFieldUpdateOperationsInput | number
-    vocabUnlocks?: UserVocabUnlockUncheckedUpdateManyWithoutUserExamScoreNestedInput
   }
 
   export type UserExamScoreCreateManyInput = {
@@ -9190,40 +9241,40 @@ export namespace Prisma {
   }
 
   export type UserVocabUnlockCreateInput = {
-    wordId: number
-    userExamScore: UserExamScoreCreateNestedOneWithoutVocabUnlocksInput
+    UserUnlockWord: UserCreateNestedOneWithoutUserVocabUnlockInput
+    UserVocabUnlockWord: WordCreateNestedOneWithoutUserVocabUnlockInput
   }
 
   export type UserVocabUnlockUncheckedCreateInput = {
     id?: number
-    userExamScoreId: number
+    userId: number
     wordId: number
   }
 
   export type UserVocabUnlockUpdateInput = {
-    wordId?: IntFieldUpdateOperationsInput | number
-    userExamScore?: UserExamScoreUpdateOneRequiredWithoutVocabUnlocksNestedInput
+    UserUnlockWord?: UserUpdateOneRequiredWithoutUserVocabUnlockNestedInput
+    UserVocabUnlockWord?: WordUpdateOneRequiredWithoutUserVocabUnlockNestedInput
   }
 
   export type UserVocabUnlockUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userExamScoreId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
     wordId?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserVocabUnlockCreateManyInput = {
     id?: number
-    userExamScoreId: number
+    userId: number
     wordId: number
   }
 
   export type UserVocabUnlockUpdateManyMutationInput = {
-    wordId?: IntFieldUpdateOperationsInput | number
+
   }
 
   export type UserVocabUnlockUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userExamScoreId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
     wordId?: IntFieldUpdateOperationsInput | number
   }
 
@@ -9259,7 +9310,17 @@ export namespace Prisma {
     none?: UserExamScoreWhereInput
   }
 
+  export type UserVocabUnlockListRelationFilter = {
+    every?: UserVocabUnlockWhereInput
+    some?: UserVocabUnlockWhereInput
+    none?: UserVocabUnlockWhereInput
+  }
+
   export type UserExamScoreOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserVocabUnlockOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -9538,16 +9599,6 @@ export namespace Prisma {
     isNot?: UserWhereInput
   }
 
-  export type UserVocabUnlockListRelationFilter = {
-    every?: UserVocabUnlockWhereInput
-    some?: UserVocabUnlockWhereInput
-    none?: UserVocabUnlockWhereInput
-  }
-
-  export type UserVocabUnlockOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type UserExamScoreUserIdExamIdCompoundUniqueInput = {
     userId: number
     examId: number
@@ -9588,38 +9639,33 @@ export namespace Prisma {
     score?: SortOrder
   }
 
-  export type UserExamScoreScalarRelationFilter = {
-    is?: UserExamScoreWhereInput
-    isNot?: UserExamScoreWhereInput
-  }
-
   export type UserVocabUnlockCountOrderByAggregateInput = {
     id?: SortOrder
-    userExamScoreId?: SortOrder
+    userId?: SortOrder
     wordId?: SortOrder
   }
 
   export type UserVocabUnlockAvgOrderByAggregateInput = {
     id?: SortOrder
-    userExamScoreId?: SortOrder
+    userId?: SortOrder
     wordId?: SortOrder
   }
 
   export type UserVocabUnlockMaxOrderByAggregateInput = {
     id?: SortOrder
-    userExamScoreId?: SortOrder
+    userId?: SortOrder
     wordId?: SortOrder
   }
 
   export type UserVocabUnlockMinOrderByAggregateInput = {
     id?: SortOrder
-    userExamScoreId?: SortOrder
+    userId?: SortOrder
     wordId?: SortOrder
   }
 
   export type UserVocabUnlockSumOrderByAggregateInput = {
     id?: SortOrder
-    userExamScoreId?: SortOrder
+    userId?: SortOrder
     wordId?: SortOrder
   }
 
@@ -9630,11 +9676,25 @@ export namespace Prisma {
     connect?: UserExamScoreWhereUniqueInput | UserExamScoreWhereUniqueInput[]
   }
 
+  export type UserVocabUnlockCreateNestedManyWithoutUserUnlockWordInput = {
+    create?: XOR<UserVocabUnlockCreateWithoutUserUnlockWordInput, UserVocabUnlockUncheckedCreateWithoutUserUnlockWordInput> | UserVocabUnlockCreateWithoutUserUnlockWordInput[] | UserVocabUnlockUncheckedCreateWithoutUserUnlockWordInput[]
+    connectOrCreate?: UserVocabUnlockCreateOrConnectWithoutUserUnlockWordInput | UserVocabUnlockCreateOrConnectWithoutUserUnlockWordInput[]
+    createMany?: UserVocabUnlockCreateManyUserUnlockWordInputEnvelope
+    connect?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
+  }
+
   export type UserExamScoreUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserExamScoreCreateWithoutUserInput, UserExamScoreUncheckedCreateWithoutUserInput> | UserExamScoreCreateWithoutUserInput[] | UserExamScoreUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserExamScoreCreateOrConnectWithoutUserInput | UserExamScoreCreateOrConnectWithoutUserInput[]
     createMany?: UserExamScoreCreateManyUserInputEnvelope
     connect?: UserExamScoreWhereUniqueInput | UserExamScoreWhereUniqueInput[]
+  }
+
+  export type UserVocabUnlockUncheckedCreateNestedManyWithoutUserUnlockWordInput = {
+    create?: XOR<UserVocabUnlockCreateWithoutUserUnlockWordInput, UserVocabUnlockUncheckedCreateWithoutUserUnlockWordInput> | UserVocabUnlockCreateWithoutUserUnlockWordInput[] | UserVocabUnlockUncheckedCreateWithoutUserUnlockWordInput[]
+    connectOrCreate?: UserVocabUnlockCreateOrConnectWithoutUserUnlockWordInput | UserVocabUnlockCreateOrConnectWithoutUserUnlockWordInput[]
+    createMany?: UserVocabUnlockCreateManyUserUnlockWordInputEnvelope
+    connect?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -9653,6 +9713,20 @@ export namespace Prisma {
     update?: UserExamScoreUpdateWithWhereUniqueWithoutUserInput | UserExamScoreUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserExamScoreUpdateManyWithWhereWithoutUserInput | UserExamScoreUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserExamScoreScalarWhereInput | UserExamScoreScalarWhereInput[]
+  }
+
+  export type UserVocabUnlockUpdateManyWithoutUserUnlockWordNestedInput = {
+    create?: XOR<UserVocabUnlockCreateWithoutUserUnlockWordInput, UserVocabUnlockUncheckedCreateWithoutUserUnlockWordInput> | UserVocabUnlockCreateWithoutUserUnlockWordInput[] | UserVocabUnlockUncheckedCreateWithoutUserUnlockWordInput[]
+    connectOrCreate?: UserVocabUnlockCreateOrConnectWithoutUserUnlockWordInput | UserVocabUnlockCreateOrConnectWithoutUserUnlockWordInput[]
+    upsert?: UserVocabUnlockUpsertWithWhereUniqueWithoutUserUnlockWordInput | UserVocabUnlockUpsertWithWhereUniqueWithoutUserUnlockWordInput[]
+    createMany?: UserVocabUnlockCreateManyUserUnlockWordInputEnvelope
+    set?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
+    disconnect?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
+    delete?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
+    connect?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
+    update?: UserVocabUnlockUpdateWithWhereUniqueWithoutUserUnlockWordInput | UserVocabUnlockUpdateWithWhereUniqueWithoutUserUnlockWordInput[]
+    updateMany?: UserVocabUnlockUpdateManyWithWhereWithoutUserUnlockWordInput | UserVocabUnlockUpdateManyWithWhereWithoutUserUnlockWordInput[]
+    deleteMany?: UserVocabUnlockScalarWhereInput | UserVocabUnlockScalarWhereInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -9675,6 +9749,20 @@ export namespace Prisma {
     update?: UserExamScoreUpdateWithWhereUniqueWithoutUserInput | UserExamScoreUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserExamScoreUpdateManyWithWhereWithoutUserInput | UserExamScoreUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserExamScoreScalarWhereInput | UserExamScoreScalarWhereInput[]
+  }
+
+  export type UserVocabUnlockUncheckedUpdateManyWithoutUserUnlockWordNestedInput = {
+    create?: XOR<UserVocabUnlockCreateWithoutUserUnlockWordInput, UserVocabUnlockUncheckedCreateWithoutUserUnlockWordInput> | UserVocabUnlockCreateWithoutUserUnlockWordInput[] | UserVocabUnlockUncheckedCreateWithoutUserUnlockWordInput[]
+    connectOrCreate?: UserVocabUnlockCreateOrConnectWithoutUserUnlockWordInput | UserVocabUnlockCreateOrConnectWithoutUserUnlockWordInput[]
+    upsert?: UserVocabUnlockUpsertWithWhereUniqueWithoutUserUnlockWordInput | UserVocabUnlockUpsertWithWhereUniqueWithoutUserUnlockWordInput[]
+    createMany?: UserVocabUnlockCreateManyUserUnlockWordInputEnvelope
+    set?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
+    disconnect?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
+    delete?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
+    connect?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
+    update?: UserVocabUnlockUpdateWithWhereUniqueWithoutUserUnlockWordInput | UserVocabUnlockUpdateWithWhereUniqueWithoutUserUnlockWordInput[]
+    updateMany?: UserVocabUnlockUpdateManyWithWhereWithoutUserUnlockWordInput | UserVocabUnlockUpdateManyWithWhereWithoutUserUnlockWordInput[]
+    deleteMany?: UserVocabUnlockScalarWhereInput | UserVocabUnlockScalarWhereInput[]
   }
 
   export type QuestionCreateNestedManyWithoutExamInput = {
@@ -9837,10 +9925,24 @@ export namespace Prisma {
     connect?: QuestionWhereUniqueInput
   }
 
+  export type UserVocabUnlockCreateNestedManyWithoutUserVocabUnlockWordInput = {
+    create?: XOR<UserVocabUnlockCreateWithoutUserVocabUnlockWordInput, UserVocabUnlockUncheckedCreateWithoutUserVocabUnlockWordInput> | UserVocabUnlockCreateWithoutUserVocabUnlockWordInput[] | UserVocabUnlockUncheckedCreateWithoutUserVocabUnlockWordInput[]
+    connectOrCreate?: UserVocabUnlockCreateOrConnectWithoutUserVocabUnlockWordInput | UserVocabUnlockCreateOrConnectWithoutUserVocabUnlockWordInput[]
+    createMany?: UserVocabUnlockCreateManyUserVocabUnlockWordInputEnvelope
+    connect?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
+  }
+
   export type QuestionUncheckedCreateNestedOneWithoutWordInput = {
     create?: XOR<QuestionCreateWithoutWordInput, QuestionUncheckedCreateWithoutWordInput>
     connectOrCreate?: QuestionCreateOrConnectWithoutWordInput
     connect?: QuestionWhereUniqueInput
+  }
+
+  export type UserVocabUnlockUncheckedCreateNestedManyWithoutUserVocabUnlockWordInput = {
+    create?: XOR<UserVocabUnlockCreateWithoutUserVocabUnlockWordInput, UserVocabUnlockUncheckedCreateWithoutUserVocabUnlockWordInput> | UserVocabUnlockCreateWithoutUserVocabUnlockWordInput[] | UserVocabUnlockUncheckedCreateWithoutUserVocabUnlockWordInput[]
+    connectOrCreate?: UserVocabUnlockCreateOrConnectWithoutUserVocabUnlockWordInput | UserVocabUnlockCreateOrConnectWithoutUserVocabUnlockWordInput[]
+    createMany?: UserVocabUnlockCreateManyUserVocabUnlockWordInputEnvelope
+    connect?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
   }
 
   export type QuestionUpdateOneWithoutWordNestedInput = {
@@ -9853,6 +9955,20 @@ export namespace Prisma {
     update?: XOR<XOR<QuestionUpdateToOneWithWhereWithoutWordInput, QuestionUpdateWithoutWordInput>, QuestionUncheckedUpdateWithoutWordInput>
   }
 
+  export type UserVocabUnlockUpdateManyWithoutUserVocabUnlockWordNestedInput = {
+    create?: XOR<UserVocabUnlockCreateWithoutUserVocabUnlockWordInput, UserVocabUnlockUncheckedCreateWithoutUserVocabUnlockWordInput> | UserVocabUnlockCreateWithoutUserVocabUnlockWordInput[] | UserVocabUnlockUncheckedCreateWithoutUserVocabUnlockWordInput[]
+    connectOrCreate?: UserVocabUnlockCreateOrConnectWithoutUserVocabUnlockWordInput | UserVocabUnlockCreateOrConnectWithoutUserVocabUnlockWordInput[]
+    upsert?: UserVocabUnlockUpsertWithWhereUniqueWithoutUserVocabUnlockWordInput | UserVocabUnlockUpsertWithWhereUniqueWithoutUserVocabUnlockWordInput[]
+    createMany?: UserVocabUnlockCreateManyUserVocabUnlockWordInputEnvelope
+    set?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
+    disconnect?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
+    delete?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
+    connect?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
+    update?: UserVocabUnlockUpdateWithWhereUniqueWithoutUserVocabUnlockWordInput | UserVocabUnlockUpdateWithWhereUniqueWithoutUserVocabUnlockWordInput[]
+    updateMany?: UserVocabUnlockUpdateManyWithWhereWithoutUserVocabUnlockWordInput | UserVocabUnlockUpdateManyWithWhereWithoutUserVocabUnlockWordInput[]
+    deleteMany?: UserVocabUnlockScalarWhereInput | UserVocabUnlockScalarWhereInput[]
+  }
+
   export type QuestionUncheckedUpdateOneWithoutWordNestedInput = {
     create?: XOR<QuestionCreateWithoutWordInput, QuestionUncheckedCreateWithoutWordInput>
     connectOrCreate?: QuestionCreateOrConnectWithoutWordInput
@@ -9861,6 +9977,20 @@ export namespace Prisma {
     delete?: QuestionWhereInput | boolean
     connect?: QuestionWhereUniqueInput
     update?: XOR<XOR<QuestionUpdateToOneWithWhereWithoutWordInput, QuestionUpdateWithoutWordInput>, QuestionUncheckedUpdateWithoutWordInput>
+  }
+
+  export type UserVocabUnlockUncheckedUpdateManyWithoutUserVocabUnlockWordNestedInput = {
+    create?: XOR<UserVocabUnlockCreateWithoutUserVocabUnlockWordInput, UserVocabUnlockUncheckedCreateWithoutUserVocabUnlockWordInput> | UserVocabUnlockCreateWithoutUserVocabUnlockWordInput[] | UserVocabUnlockUncheckedCreateWithoutUserVocabUnlockWordInput[]
+    connectOrCreate?: UserVocabUnlockCreateOrConnectWithoutUserVocabUnlockWordInput | UserVocabUnlockCreateOrConnectWithoutUserVocabUnlockWordInput[]
+    upsert?: UserVocabUnlockUpsertWithWhereUniqueWithoutUserVocabUnlockWordInput | UserVocabUnlockUpsertWithWhereUniqueWithoutUserVocabUnlockWordInput[]
+    createMany?: UserVocabUnlockCreateManyUserVocabUnlockWordInputEnvelope
+    set?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
+    disconnect?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
+    delete?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
+    connect?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
+    update?: UserVocabUnlockUpdateWithWhereUniqueWithoutUserVocabUnlockWordInput | UserVocabUnlockUpdateWithWhereUniqueWithoutUserVocabUnlockWordInput[]
+    updateMany?: UserVocabUnlockUpdateManyWithWhereWithoutUserVocabUnlockWordInput | UserVocabUnlockUpdateManyWithWhereWithoutUserVocabUnlockWordInput[]
+    deleteMany?: UserVocabUnlockScalarWhereInput | UserVocabUnlockScalarWhereInput[]
   }
 
   export type QuestionCreateNestedOneWithoutChoicesInput = {
@@ -9893,20 +10023,6 @@ export namespace Prisma {
     connect?: ExamWhereUniqueInput
   }
 
-  export type UserVocabUnlockCreateNestedManyWithoutUserExamScoreInput = {
-    create?: XOR<UserVocabUnlockCreateWithoutUserExamScoreInput, UserVocabUnlockUncheckedCreateWithoutUserExamScoreInput> | UserVocabUnlockCreateWithoutUserExamScoreInput[] | UserVocabUnlockUncheckedCreateWithoutUserExamScoreInput[]
-    connectOrCreate?: UserVocabUnlockCreateOrConnectWithoutUserExamScoreInput | UserVocabUnlockCreateOrConnectWithoutUserExamScoreInput[]
-    createMany?: UserVocabUnlockCreateManyUserExamScoreInputEnvelope
-    connect?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
-  }
-
-  export type UserVocabUnlockUncheckedCreateNestedManyWithoutUserExamScoreInput = {
-    create?: XOR<UserVocabUnlockCreateWithoutUserExamScoreInput, UserVocabUnlockUncheckedCreateWithoutUserExamScoreInput> | UserVocabUnlockCreateWithoutUserExamScoreInput[] | UserVocabUnlockUncheckedCreateWithoutUserExamScoreInput[]
-    connectOrCreate?: UserVocabUnlockCreateOrConnectWithoutUserExamScoreInput | UserVocabUnlockCreateOrConnectWithoutUserExamScoreInput[]
-    createMany?: UserVocabUnlockCreateManyUserExamScoreInputEnvelope
-    connect?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
-  }
-
   export type UserUpdateOneRequiredWithoutExamScoresNestedInput = {
     create?: XOR<UserCreateWithoutExamScoresInput, UserUncheckedCreateWithoutExamScoresInput>
     connectOrCreate?: UserCreateOrConnectWithoutExamScoresInput
@@ -9923,46 +10039,32 @@ export namespace Prisma {
     update?: XOR<XOR<ExamUpdateToOneWithWhereWithoutScoresInput, ExamUpdateWithoutScoresInput>, ExamUncheckedUpdateWithoutScoresInput>
   }
 
-  export type UserVocabUnlockUpdateManyWithoutUserExamScoreNestedInput = {
-    create?: XOR<UserVocabUnlockCreateWithoutUserExamScoreInput, UserVocabUnlockUncheckedCreateWithoutUserExamScoreInput> | UserVocabUnlockCreateWithoutUserExamScoreInput[] | UserVocabUnlockUncheckedCreateWithoutUserExamScoreInput[]
-    connectOrCreate?: UserVocabUnlockCreateOrConnectWithoutUserExamScoreInput | UserVocabUnlockCreateOrConnectWithoutUserExamScoreInput[]
-    upsert?: UserVocabUnlockUpsertWithWhereUniqueWithoutUserExamScoreInput | UserVocabUnlockUpsertWithWhereUniqueWithoutUserExamScoreInput[]
-    createMany?: UserVocabUnlockCreateManyUserExamScoreInputEnvelope
-    set?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
-    disconnect?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
-    delete?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
-    connect?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
-    update?: UserVocabUnlockUpdateWithWhereUniqueWithoutUserExamScoreInput | UserVocabUnlockUpdateWithWhereUniqueWithoutUserExamScoreInput[]
-    updateMany?: UserVocabUnlockUpdateManyWithWhereWithoutUserExamScoreInput | UserVocabUnlockUpdateManyWithWhereWithoutUserExamScoreInput[]
-    deleteMany?: UserVocabUnlockScalarWhereInput | UserVocabUnlockScalarWhereInput[]
+  export type UserCreateNestedOneWithoutUserVocabUnlockInput = {
+    create?: XOR<UserCreateWithoutUserVocabUnlockInput, UserUncheckedCreateWithoutUserVocabUnlockInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserVocabUnlockInput
+    connect?: UserWhereUniqueInput
   }
 
-  export type UserVocabUnlockUncheckedUpdateManyWithoutUserExamScoreNestedInput = {
-    create?: XOR<UserVocabUnlockCreateWithoutUserExamScoreInput, UserVocabUnlockUncheckedCreateWithoutUserExamScoreInput> | UserVocabUnlockCreateWithoutUserExamScoreInput[] | UserVocabUnlockUncheckedCreateWithoutUserExamScoreInput[]
-    connectOrCreate?: UserVocabUnlockCreateOrConnectWithoutUserExamScoreInput | UserVocabUnlockCreateOrConnectWithoutUserExamScoreInput[]
-    upsert?: UserVocabUnlockUpsertWithWhereUniqueWithoutUserExamScoreInput | UserVocabUnlockUpsertWithWhereUniqueWithoutUserExamScoreInput[]
-    createMany?: UserVocabUnlockCreateManyUserExamScoreInputEnvelope
-    set?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
-    disconnect?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
-    delete?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
-    connect?: UserVocabUnlockWhereUniqueInput | UserVocabUnlockWhereUniqueInput[]
-    update?: UserVocabUnlockUpdateWithWhereUniqueWithoutUserExamScoreInput | UserVocabUnlockUpdateWithWhereUniqueWithoutUserExamScoreInput[]
-    updateMany?: UserVocabUnlockUpdateManyWithWhereWithoutUserExamScoreInput | UserVocabUnlockUpdateManyWithWhereWithoutUserExamScoreInput[]
-    deleteMany?: UserVocabUnlockScalarWhereInput | UserVocabUnlockScalarWhereInput[]
+  export type WordCreateNestedOneWithoutUserVocabUnlockInput = {
+    create?: XOR<WordCreateWithoutUserVocabUnlockInput, WordUncheckedCreateWithoutUserVocabUnlockInput>
+    connectOrCreate?: WordCreateOrConnectWithoutUserVocabUnlockInput
+    connect?: WordWhereUniqueInput
   }
 
-  export type UserExamScoreCreateNestedOneWithoutVocabUnlocksInput = {
-    create?: XOR<UserExamScoreCreateWithoutVocabUnlocksInput, UserExamScoreUncheckedCreateWithoutVocabUnlocksInput>
-    connectOrCreate?: UserExamScoreCreateOrConnectWithoutVocabUnlocksInput
-    connect?: UserExamScoreWhereUniqueInput
+  export type UserUpdateOneRequiredWithoutUserVocabUnlockNestedInput = {
+    create?: XOR<UserCreateWithoutUserVocabUnlockInput, UserUncheckedCreateWithoutUserVocabUnlockInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserVocabUnlockInput
+    upsert?: UserUpsertWithoutUserVocabUnlockInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUserVocabUnlockInput, UserUpdateWithoutUserVocabUnlockInput>, UserUncheckedUpdateWithoutUserVocabUnlockInput>
   }
 
-  export type UserExamScoreUpdateOneRequiredWithoutVocabUnlocksNestedInput = {
-    create?: XOR<UserExamScoreCreateWithoutVocabUnlocksInput, UserExamScoreUncheckedCreateWithoutVocabUnlocksInput>
-    connectOrCreate?: UserExamScoreCreateOrConnectWithoutVocabUnlocksInput
-    upsert?: UserExamScoreUpsertWithoutVocabUnlocksInput
-    connect?: UserExamScoreWhereUniqueInput
-    update?: XOR<XOR<UserExamScoreUpdateToOneWithWhereWithoutVocabUnlocksInput, UserExamScoreUpdateWithoutVocabUnlocksInput>, UserExamScoreUncheckedUpdateWithoutVocabUnlocksInput>
+  export type WordUpdateOneRequiredWithoutUserVocabUnlockNestedInput = {
+    create?: XOR<WordCreateWithoutUserVocabUnlockInput, WordUncheckedCreateWithoutUserVocabUnlockInput>
+    connectOrCreate?: WordCreateOrConnectWithoutUserVocabUnlockInput
+    upsert?: WordUpsertWithoutUserVocabUnlockInput
+    connect?: WordWhereUniqueInput
+    update?: XOR<XOR<WordUpdateToOneWithWhereWithoutUserVocabUnlockInput, WordUpdateWithoutUserVocabUnlockInput>, WordUncheckedUpdateWithoutUserVocabUnlockInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -10052,14 +10154,12 @@ export namespace Prisma {
   export type UserExamScoreCreateWithoutUserInput = {
     score?: number
     exam: ExamCreateNestedOneWithoutScoresInput
-    vocabUnlocks?: UserVocabUnlockCreateNestedManyWithoutUserExamScoreInput
   }
 
   export type UserExamScoreUncheckedCreateWithoutUserInput = {
     id?: number
     examId: number
     score?: number
-    vocabUnlocks?: UserVocabUnlockUncheckedCreateNestedManyWithoutUserExamScoreInput
   }
 
   export type UserExamScoreCreateOrConnectWithoutUserInput = {
@@ -10069,6 +10169,25 @@ export namespace Prisma {
 
   export type UserExamScoreCreateManyUserInputEnvelope = {
     data: UserExamScoreCreateManyUserInput | UserExamScoreCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserVocabUnlockCreateWithoutUserUnlockWordInput = {
+    UserVocabUnlockWord: WordCreateNestedOneWithoutUserVocabUnlockInput
+  }
+
+  export type UserVocabUnlockUncheckedCreateWithoutUserUnlockWordInput = {
+    id?: number
+    wordId: number
+  }
+
+  export type UserVocabUnlockCreateOrConnectWithoutUserUnlockWordInput = {
+    where: UserVocabUnlockWhereUniqueInput
+    create: XOR<UserVocabUnlockCreateWithoutUserUnlockWordInput, UserVocabUnlockUncheckedCreateWithoutUserUnlockWordInput>
+  }
+
+  export type UserVocabUnlockCreateManyUserUnlockWordInputEnvelope = {
+    data: UserVocabUnlockCreateManyUserUnlockWordInput | UserVocabUnlockCreateManyUserUnlockWordInput[]
     skipDuplicates?: boolean
   }
 
@@ -10096,6 +10215,31 @@ export namespace Prisma {
     userId?: IntFilter<"UserExamScore"> | number
     examId?: IntFilter<"UserExamScore"> | number
     score?: IntFilter<"UserExamScore"> | number
+  }
+
+  export type UserVocabUnlockUpsertWithWhereUniqueWithoutUserUnlockWordInput = {
+    where: UserVocabUnlockWhereUniqueInput
+    update: XOR<UserVocabUnlockUpdateWithoutUserUnlockWordInput, UserVocabUnlockUncheckedUpdateWithoutUserUnlockWordInput>
+    create: XOR<UserVocabUnlockCreateWithoutUserUnlockWordInput, UserVocabUnlockUncheckedCreateWithoutUserUnlockWordInput>
+  }
+
+  export type UserVocabUnlockUpdateWithWhereUniqueWithoutUserUnlockWordInput = {
+    where: UserVocabUnlockWhereUniqueInput
+    data: XOR<UserVocabUnlockUpdateWithoutUserUnlockWordInput, UserVocabUnlockUncheckedUpdateWithoutUserUnlockWordInput>
+  }
+
+  export type UserVocabUnlockUpdateManyWithWhereWithoutUserUnlockWordInput = {
+    where: UserVocabUnlockScalarWhereInput
+    data: XOR<UserVocabUnlockUpdateManyMutationInput, UserVocabUnlockUncheckedUpdateManyWithoutUserUnlockWordInput>
+  }
+
+  export type UserVocabUnlockScalarWhereInput = {
+    AND?: UserVocabUnlockScalarWhereInput | UserVocabUnlockScalarWhereInput[]
+    OR?: UserVocabUnlockScalarWhereInput[]
+    NOT?: UserVocabUnlockScalarWhereInput | UserVocabUnlockScalarWhereInput[]
+    id?: IntFilter<"UserVocabUnlock"> | number
+    userId?: IntFilter<"UserVocabUnlock"> | number
+    wordId?: IntFilter<"UserVocabUnlock"> | number
   }
 
   export type QuestionCreateWithoutExamInput = {
@@ -10126,14 +10270,12 @@ export namespace Prisma {
   export type UserExamScoreCreateWithoutExamInput = {
     score?: number
     user: UserCreateNestedOneWithoutExamScoresInput
-    vocabUnlocks?: UserVocabUnlockCreateNestedManyWithoutUserExamScoreInput
   }
 
   export type UserExamScoreUncheckedCreateWithoutExamInput = {
     id?: number
     userId: number
     score?: number
-    vocabUnlocks?: UserVocabUnlockUncheckedCreateNestedManyWithoutUserExamScoreInput
   }
 
   export type UserExamScoreCreateOrConnectWithoutExamInput = {
@@ -10209,6 +10351,7 @@ export namespace Prisma {
     word: string
     meaning: string
     synonym: string
+    UserVocabUnlock?: UserVocabUnlockCreateNestedManyWithoutUserVocabUnlockWordInput
   }
 
   export type WordUncheckedCreateWithoutQuestionInput = {
@@ -10216,6 +10359,7 @@ export namespace Prisma {
     word: string
     meaning: string
     synonym: string
+    UserVocabUnlock?: UserVocabUnlockUncheckedCreateNestedManyWithoutUserVocabUnlockWordInput
   }
 
   export type WordCreateOrConnectWithoutQuestionInput = {
@@ -10281,6 +10425,7 @@ export namespace Prisma {
     word?: StringFieldUpdateOperationsInput | string
     meaning?: StringFieldUpdateOperationsInput | string
     synonym?: StringFieldUpdateOperationsInput | string
+    UserVocabUnlock?: UserVocabUnlockUpdateManyWithoutUserVocabUnlockWordNestedInput
   }
 
   export type WordUncheckedUpdateWithoutQuestionInput = {
@@ -10288,6 +10433,7 @@ export namespace Prisma {
     word?: StringFieldUpdateOperationsInput | string
     meaning?: StringFieldUpdateOperationsInput | string
     synonym?: StringFieldUpdateOperationsInput | string
+    UserVocabUnlock?: UserVocabUnlockUncheckedUpdateManyWithoutUserVocabUnlockWordNestedInput
   }
 
   export type ChoiceUpsertWithWhereUniqueWithoutQuestionInput = {
@@ -10336,6 +10482,25 @@ export namespace Prisma {
     create: XOR<QuestionCreateWithoutWordInput, QuestionUncheckedCreateWithoutWordInput>
   }
 
+  export type UserVocabUnlockCreateWithoutUserVocabUnlockWordInput = {
+    UserUnlockWord: UserCreateNestedOneWithoutUserVocabUnlockInput
+  }
+
+  export type UserVocabUnlockUncheckedCreateWithoutUserVocabUnlockWordInput = {
+    id?: number
+    userId: number
+  }
+
+  export type UserVocabUnlockCreateOrConnectWithoutUserVocabUnlockWordInput = {
+    where: UserVocabUnlockWhereUniqueInput
+    create: XOR<UserVocabUnlockCreateWithoutUserVocabUnlockWordInput, UserVocabUnlockUncheckedCreateWithoutUserVocabUnlockWordInput>
+  }
+
+  export type UserVocabUnlockCreateManyUserVocabUnlockWordInputEnvelope = {
+    data: UserVocabUnlockCreateManyUserVocabUnlockWordInput | UserVocabUnlockCreateManyUserVocabUnlockWordInput[]
+    skipDuplicates?: boolean
+  }
+
   export type QuestionUpsertWithoutWordInput = {
     update: XOR<QuestionUpdateWithoutWordInput, QuestionUncheckedUpdateWithoutWordInput>
     create: XOR<QuestionCreateWithoutWordInput, QuestionUncheckedCreateWithoutWordInput>
@@ -10360,6 +10525,22 @@ export namespace Prisma {
     question?: StringFieldUpdateOperationsInput | string
     examId?: IntFieldUpdateOperationsInput | number
     choices?: ChoiceUncheckedUpdateManyWithoutQuestionNestedInput
+  }
+
+  export type UserVocabUnlockUpsertWithWhereUniqueWithoutUserVocabUnlockWordInput = {
+    where: UserVocabUnlockWhereUniqueInput
+    update: XOR<UserVocabUnlockUpdateWithoutUserVocabUnlockWordInput, UserVocabUnlockUncheckedUpdateWithoutUserVocabUnlockWordInput>
+    create: XOR<UserVocabUnlockCreateWithoutUserVocabUnlockWordInput, UserVocabUnlockUncheckedCreateWithoutUserVocabUnlockWordInput>
+  }
+
+  export type UserVocabUnlockUpdateWithWhereUniqueWithoutUserVocabUnlockWordInput = {
+    where: UserVocabUnlockWhereUniqueInput
+    data: XOR<UserVocabUnlockUpdateWithoutUserVocabUnlockWordInput, UserVocabUnlockUncheckedUpdateWithoutUserVocabUnlockWordInput>
+  }
+
+  export type UserVocabUnlockUpdateManyWithWhereWithoutUserVocabUnlockWordInput = {
+    where: UserVocabUnlockScalarWhereInput
+    data: XOR<UserVocabUnlockUpdateManyMutationInput, UserVocabUnlockUncheckedUpdateManyWithoutUserVocabUnlockWordInput>
   }
 
   export type QuestionCreateWithoutChoicesInput = {
@@ -10413,6 +10594,7 @@ export namespace Prisma {
     email: string
     password: string
     languageLevel?: string
+    UserVocabUnlock?: UserVocabUnlockCreateNestedManyWithoutUserUnlockWordInput
   }
 
   export type UserUncheckedCreateWithoutExamScoresInput = {
@@ -10421,6 +10603,7 @@ export namespace Prisma {
     email: string
     password: string
     languageLevel?: string
+    UserVocabUnlock?: UserVocabUnlockUncheckedCreateNestedManyWithoutUserUnlockWordInput
   }
 
   export type UserCreateOrConnectWithoutExamScoresInput = {
@@ -10444,25 +10627,6 @@ export namespace Prisma {
     create: XOR<ExamCreateWithoutScoresInput, ExamUncheckedCreateWithoutScoresInput>
   }
 
-  export type UserVocabUnlockCreateWithoutUserExamScoreInput = {
-    wordId: number
-  }
-
-  export type UserVocabUnlockUncheckedCreateWithoutUserExamScoreInput = {
-    id?: number
-    wordId: number
-  }
-
-  export type UserVocabUnlockCreateOrConnectWithoutUserExamScoreInput = {
-    where: UserVocabUnlockWhereUniqueInput
-    create: XOR<UserVocabUnlockCreateWithoutUserExamScoreInput, UserVocabUnlockUncheckedCreateWithoutUserExamScoreInput>
-  }
-
-  export type UserVocabUnlockCreateManyUserExamScoreInputEnvelope = {
-    data: UserVocabUnlockCreateManyUserExamScoreInput | UserVocabUnlockCreateManyUserExamScoreInput[]
-    skipDuplicates?: boolean
-  }
-
   export type UserUpsertWithoutExamScoresInput = {
     update: XOR<UserUpdateWithoutExamScoresInput, UserUncheckedUpdateWithoutExamScoresInput>
     create: XOR<UserCreateWithoutExamScoresInput, UserUncheckedCreateWithoutExamScoresInput>
@@ -10479,6 +10643,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     languageLevel?: StringFieldUpdateOperationsInput | string
+    UserVocabUnlock?: UserVocabUnlockUpdateManyWithoutUserUnlockWordNestedInput
   }
 
   export type UserUncheckedUpdateWithoutExamScoresInput = {
@@ -10487,6 +10652,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     languageLevel?: StringFieldUpdateOperationsInput | string
+    UserVocabUnlock?: UserVocabUnlockUncheckedUpdateManyWithoutUserUnlockWordNestedInput
   }
 
   export type ExamUpsertWithoutScoresInput = {
@@ -10511,71 +10677,100 @@ export namespace Prisma {
     questions?: QuestionUncheckedUpdateManyWithoutExamNestedInput
   }
 
-  export type UserVocabUnlockUpsertWithWhereUniqueWithoutUserExamScoreInput = {
-    where: UserVocabUnlockWhereUniqueInput
-    update: XOR<UserVocabUnlockUpdateWithoutUserExamScoreInput, UserVocabUnlockUncheckedUpdateWithoutUserExamScoreInput>
-    create: XOR<UserVocabUnlockCreateWithoutUserExamScoreInput, UserVocabUnlockUncheckedCreateWithoutUserExamScoreInput>
+  export type UserCreateWithoutUserVocabUnlockInput = {
+    username: string
+    email: string
+    password: string
+    languageLevel?: string
+    examScores?: UserExamScoreCreateNestedManyWithoutUserInput
   }
 
-  export type UserVocabUnlockUpdateWithWhereUniqueWithoutUserExamScoreInput = {
-    where: UserVocabUnlockWhereUniqueInput
-    data: XOR<UserVocabUnlockUpdateWithoutUserExamScoreInput, UserVocabUnlockUncheckedUpdateWithoutUserExamScoreInput>
-  }
-
-  export type UserVocabUnlockUpdateManyWithWhereWithoutUserExamScoreInput = {
-    where: UserVocabUnlockScalarWhereInput
-    data: XOR<UserVocabUnlockUpdateManyMutationInput, UserVocabUnlockUncheckedUpdateManyWithoutUserExamScoreInput>
-  }
-
-  export type UserVocabUnlockScalarWhereInput = {
-    AND?: UserVocabUnlockScalarWhereInput | UserVocabUnlockScalarWhereInput[]
-    OR?: UserVocabUnlockScalarWhereInput[]
-    NOT?: UserVocabUnlockScalarWhereInput | UserVocabUnlockScalarWhereInput[]
-    id?: IntFilter<"UserVocabUnlock"> | number
-    userExamScoreId?: IntFilter<"UserVocabUnlock"> | number
-    wordId?: IntFilter<"UserVocabUnlock"> | number
-  }
-
-  export type UserExamScoreCreateWithoutVocabUnlocksInput = {
-    score?: number
-    user: UserCreateNestedOneWithoutExamScoresInput
-    exam: ExamCreateNestedOneWithoutScoresInput
-  }
-
-  export type UserExamScoreUncheckedCreateWithoutVocabUnlocksInput = {
+  export type UserUncheckedCreateWithoutUserVocabUnlockInput = {
     id?: number
-    userId: number
-    examId: number
-    score?: number
+    username: string
+    email: string
+    password: string
+    languageLevel?: string
+    examScores?: UserExamScoreUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type UserExamScoreCreateOrConnectWithoutVocabUnlocksInput = {
-    where: UserExamScoreWhereUniqueInput
-    create: XOR<UserExamScoreCreateWithoutVocabUnlocksInput, UserExamScoreUncheckedCreateWithoutVocabUnlocksInput>
+  export type UserCreateOrConnectWithoutUserVocabUnlockInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutUserVocabUnlockInput, UserUncheckedCreateWithoutUserVocabUnlockInput>
   }
 
-  export type UserExamScoreUpsertWithoutVocabUnlocksInput = {
-    update: XOR<UserExamScoreUpdateWithoutVocabUnlocksInput, UserExamScoreUncheckedUpdateWithoutVocabUnlocksInput>
-    create: XOR<UserExamScoreCreateWithoutVocabUnlocksInput, UserExamScoreUncheckedCreateWithoutVocabUnlocksInput>
-    where?: UserExamScoreWhereInput
+  export type WordCreateWithoutUserVocabUnlockInput = {
+    word: string
+    meaning: string
+    synonym: string
+    question?: QuestionCreateNestedOneWithoutWordInput
   }
 
-  export type UserExamScoreUpdateToOneWithWhereWithoutVocabUnlocksInput = {
-    where?: UserExamScoreWhereInput
-    data: XOR<UserExamScoreUpdateWithoutVocabUnlocksInput, UserExamScoreUncheckedUpdateWithoutVocabUnlocksInput>
+  export type WordUncheckedCreateWithoutUserVocabUnlockInput = {
+    id?: number
+    word: string
+    meaning: string
+    synonym: string
+    question?: QuestionUncheckedCreateNestedOneWithoutWordInput
   }
 
-  export type UserExamScoreUpdateWithoutVocabUnlocksInput = {
-    score?: IntFieldUpdateOperationsInput | number
-    user?: UserUpdateOneRequiredWithoutExamScoresNestedInput
-    exam?: ExamUpdateOneRequiredWithoutScoresNestedInput
+  export type WordCreateOrConnectWithoutUserVocabUnlockInput = {
+    where: WordWhereUniqueInput
+    create: XOR<WordCreateWithoutUserVocabUnlockInput, WordUncheckedCreateWithoutUserVocabUnlockInput>
   }
 
-  export type UserExamScoreUncheckedUpdateWithoutVocabUnlocksInput = {
+  export type UserUpsertWithoutUserVocabUnlockInput = {
+    update: XOR<UserUpdateWithoutUserVocabUnlockInput, UserUncheckedUpdateWithoutUserVocabUnlockInput>
+    create: XOR<UserCreateWithoutUserVocabUnlockInput, UserUncheckedCreateWithoutUserVocabUnlockInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutUserVocabUnlockInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutUserVocabUnlockInput, UserUncheckedUpdateWithoutUserVocabUnlockInput>
+  }
+
+  export type UserUpdateWithoutUserVocabUnlockInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    languageLevel?: StringFieldUpdateOperationsInput | string
+    examScores?: UserExamScoreUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutUserVocabUnlockInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-    examId?: IntFieldUpdateOperationsInput | number
-    score?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    languageLevel?: StringFieldUpdateOperationsInput | string
+    examScores?: UserExamScoreUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type WordUpsertWithoutUserVocabUnlockInput = {
+    update: XOR<WordUpdateWithoutUserVocabUnlockInput, WordUncheckedUpdateWithoutUserVocabUnlockInput>
+    create: XOR<WordCreateWithoutUserVocabUnlockInput, WordUncheckedCreateWithoutUserVocabUnlockInput>
+    where?: WordWhereInput
+  }
+
+  export type WordUpdateToOneWithWhereWithoutUserVocabUnlockInput = {
+    where?: WordWhereInput
+    data: XOR<WordUpdateWithoutUserVocabUnlockInput, WordUncheckedUpdateWithoutUserVocabUnlockInput>
+  }
+
+  export type WordUpdateWithoutUserVocabUnlockInput = {
+    word?: StringFieldUpdateOperationsInput | string
+    meaning?: StringFieldUpdateOperationsInput | string
+    synonym?: StringFieldUpdateOperationsInput | string
+    question?: QuestionUpdateOneWithoutWordNestedInput
+  }
+
+  export type WordUncheckedUpdateWithoutUserVocabUnlockInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    word?: StringFieldUpdateOperationsInput | string
+    meaning?: StringFieldUpdateOperationsInput | string
+    synonym?: StringFieldUpdateOperationsInput | string
+    question?: QuestionUncheckedUpdateOneWithoutWordNestedInput
   }
 
   export type UserExamScoreCreateManyUserInput = {
@@ -10584,23 +10779,40 @@ export namespace Prisma {
     score?: number
   }
 
+  export type UserVocabUnlockCreateManyUserUnlockWordInput = {
+    id?: number
+    wordId: number
+  }
+
   export type UserExamScoreUpdateWithoutUserInput = {
     score?: IntFieldUpdateOperationsInput | number
     exam?: ExamUpdateOneRequiredWithoutScoresNestedInput
-    vocabUnlocks?: UserVocabUnlockUpdateManyWithoutUserExamScoreNestedInput
   }
 
   export type UserExamScoreUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     examId?: IntFieldUpdateOperationsInput | number
     score?: IntFieldUpdateOperationsInput | number
-    vocabUnlocks?: UserVocabUnlockUncheckedUpdateManyWithoutUserExamScoreNestedInput
   }
 
   export type UserExamScoreUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     examId?: IntFieldUpdateOperationsInput | number
     score?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserVocabUnlockUpdateWithoutUserUnlockWordInput = {
+    UserVocabUnlockWord?: WordUpdateOneRequiredWithoutUserVocabUnlockNestedInput
+  }
+
+  export type UserVocabUnlockUncheckedUpdateWithoutUserUnlockWordInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    wordId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserVocabUnlockUncheckedUpdateManyWithoutUserUnlockWordInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    wordId?: IntFieldUpdateOperationsInput | number
   }
 
   export type QuestionCreateManyExamInput = {
@@ -10641,14 +10853,12 @@ export namespace Prisma {
   export type UserExamScoreUpdateWithoutExamInput = {
     score?: IntFieldUpdateOperationsInput | number
     user?: UserUpdateOneRequiredWithoutExamScoresNestedInput
-    vocabUnlocks?: UserVocabUnlockUpdateManyWithoutUserExamScoreNestedInput
   }
 
   export type UserExamScoreUncheckedUpdateWithoutExamInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     score?: IntFieldUpdateOperationsInput | number
-    vocabUnlocks?: UserVocabUnlockUncheckedUpdateManyWithoutUserExamScoreNestedInput
   }
 
   export type UserExamScoreUncheckedUpdateManyWithoutExamInput = {
@@ -10680,23 +10890,23 @@ export namespace Prisma {
     correct?: BoolFieldUpdateOperationsInput | boolean
   }
 
-  export type UserVocabUnlockCreateManyUserExamScoreInput = {
+  export type UserVocabUnlockCreateManyUserVocabUnlockWordInput = {
     id?: number
-    wordId: number
+    userId: number
   }
 
-  export type UserVocabUnlockUpdateWithoutUserExamScoreInput = {
-    wordId?: IntFieldUpdateOperationsInput | number
+  export type UserVocabUnlockUpdateWithoutUserVocabUnlockWordInput = {
+    UserUnlockWord?: UserUpdateOneRequiredWithoutUserVocabUnlockNestedInput
   }
 
-  export type UserVocabUnlockUncheckedUpdateWithoutUserExamScoreInput = {
+  export type UserVocabUnlockUncheckedUpdateWithoutUserVocabUnlockWordInput = {
     id?: IntFieldUpdateOperationsInput | number
-    wordId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type UserVocabUnlockUncheckedUpdateManyWithoutUserExamScoreInput = {
+  export type UserVocabUnlockUncheckedUpdateManyWithoutUserVocabUnlockWordInput = {
     id?: IntFieldUpdateOperationsInput | number
-    wordId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
   }
 
 

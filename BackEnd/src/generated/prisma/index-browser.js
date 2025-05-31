@@ -164,7 +164,7 @@ exports.Prisma.UserExamScoreScalarFieldEnum = {
 
 exports.Prisma.UserVocabUnlockScalarFieldEnum = {
   id: 'id',
-  userExamScoreId: 'userExamScoreId',
+  userId: 'userId',
   wordId: 'wordId'
 };
 
