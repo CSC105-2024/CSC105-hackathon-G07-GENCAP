@@ -1,5 +1,5 @@
 import type { Context } from "hono";
-import { createQuestion, getQuestion } from "../models/question.model.ts"; // เปลี่ยน path ตามไฟล์จริงของคุณ
+import { createQuestion, getQuestion , getAllQuestion } from "../models/question.model.ts"; // เปลี่ยน path ตามไฟล์จริงของคุณ
 
 
 export const createQuestionController = async (c: Context) => {
@@ -33,13 +33,11 @@ export const createQuestionController = async (c: Context) => {
   }
 };
 
-// Controller สำหรับดึงคำถามตาม examId และ questionNumber
+
 export const getQuestionController = async (c: Context) => {
   try {
-    // สมมติรับ examId และ questionNumber จาก query params
-    const url = new URL(c.req.url);
-    const examId = Number(url.searchParams.get("examId"));
-    const questionNumber = Number(url.searchParams.get("questionNumber"));
+    const examId = parseInt(c.req.param("examId"))
+    const questionNumber = parseInt(c.req.param("questionNumber"))
 
     if (isNaN(examId) || isNaN(questionNumber)) {
       return c.json({
@@ -50,6 +48,8 @@ export const getQuestionController = async (c: Context) => {
     }
 
     const question = await getQuestion(examId, questionNumber);
+    console.log(question);
+    
 
     if (!question) {
       return c.json({
@@ -70,6 +70,24 @@ export const getQuestionController = async (c: Context) => {
       success: false,
       data: null,
       msg: e instanceof Error ? e.message : "Internal Server Error",
+    }, 500);
+  }
+};
+
+export const getAllQuestionController = async (c: Context) => {
+  try {
+    const response = await getAllQuestion();
+
+    return c.json({
+      success: true,
+      data: response,
+      msg: "All questions retrieved successfully",
+    }, 200);
+  } catch (e) {
+    return c.json({
+      success: false,
+      data: null,
+      msg: `Internal Server Error: ${e}`,
     }, 500);
   }
 };

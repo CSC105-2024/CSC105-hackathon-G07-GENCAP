@@ -13,13 +13,14 @@ export const getExamScore = async (examScoreData: examScore) => {
     return await db.userExamScore.findFirst({
         where: {
             userId: examScoreData.userId,
-            examId: examScoreData.examId
+            examId: examScoreData.examId,
         },
         select: {
-            score: true
-        }
-    })
-}
+            score: true,
+        },
+    });
+};
+
 
 export const increaseScore = async (examScoreData: examScore) => {
     return await db.userExamScore.update({

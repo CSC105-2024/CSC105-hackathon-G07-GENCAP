@@ -23,6 +23,8 @@ export const createExamScore = async (c: Context) => {
 export const getExamScore = async (c: Context) => {
     try {
         const examScoreData = await c.req.json<examScore>()
+        console.log(examScoreData);
+        
         const response = await examScoreModel.getExamScore(examScoreData)
         return c.json({
             success: true,

@@ -3,8 +3,10 @@ import * as examModel from "../models/exam.model.ts"
 
 export const createExam = async (c: Context) => {
     try {
-        const difficult = await c.req.json<string>()
-        const response = await examModel.createExam(difficult);
+        const body = await c.req.json<{ difficult: string }>()
+        const response = await examModel.createExam(body.difficult);
+        console.log(response);
+        
         return c.json({
             success: true,
             data: response,

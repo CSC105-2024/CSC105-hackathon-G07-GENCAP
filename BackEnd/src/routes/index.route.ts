@@ -4,6 +4,7 @@ import vocabRouter from "./vocab.route.ts";
 import questionRouter from "./question.route.ts";
 import examRouter from "./exam.route.ts";
 import examScoreRouter from "./examScore.route.ts";
+import choiceRouter from "./choice.route.ts";
 
 const mainRouter = new Hono()
 
@@ -12,5 +13,6 @@ mainRouter.route("/vocab" , vocabRouter)
 mainRouter.route("/question" , questionRouter)
 mainRouter.route("/exams", examRouter)
 mainRouter.route("/examScores", examScoreRouter)
+mainRouter.route("/choice" , choiceRouter)
 
 export default mainRouter

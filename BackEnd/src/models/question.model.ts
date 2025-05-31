@@ -61,3 +61,15 @@ export const getQuestion = async (examId: number,questionNumber: number) => {
   return question;
 };
 
+export const getAllQuestion = async () => {
+    const question = await db.question.findMany({
+        select: {
+            id: true,
+            questionNumber: true,
+            question: true,
+            wordId: true,
+            choices: true,
+        },
+    });
+    return question;
+}
