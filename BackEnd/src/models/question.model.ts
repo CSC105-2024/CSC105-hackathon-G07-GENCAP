@@ -6,11 +6,6 @@ export const createQuestion = async (examId: number , wordId: number , question:
   const examExists = await db.exam.findUnique({ where: { id: examId } });
   if (!examExists) throw new Error("Exam ID not found");
 
-  // 2 choices condition
-  if (choices.length !== 2) {
-    throw new Error("Each question must have exactly 2 choices.");
-  }
-
   //wordId exists
   const wordExists = await db.word.findUnique({ where: { id: wordId } });
   if (!wordExists) throw new Error("Word ID not found");
