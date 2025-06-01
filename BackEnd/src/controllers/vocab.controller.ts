@@ -1,6 +1,6 @@
 import type { Context } from "hono";
 import * as VocabModels from "../models/vocab.model.ts"
-
+ 
 export const createWord = async (c: Context) => {
   try {
     const wordData = await c.req.json<{
@@ -8,13 +8,13 @@ export const createWord = async (c: Context) => {
       meaning: string;
       synonym: string;
     }>();
-
+ 
     const response = await VocabModels.createWord(
       wordData.word,
       wordData.meaning,
       wordData.synonym
     );
-
+ 
     return c.json(
       {
         success: true,
@@ -34,12 +34,12 @@ export const createWord = async (c: Context) => {
     );
   }
 };
-
+ 
 export const getUnlockedWordsByUser = async (c: Context) => {
   try {
     const userId = parseInt(c.req.param("userId"))
     const response = await VocabModels.getUnlockedWordsByUser(userId);
-
+ 
     return c.json(
       {
         success: true,
@@ -59,19 +59,19 @@ export const getUnlockedWordsByUser = async (c: Context) => {
     );
   }
 };
-
+ 
 export const wordTransferController = async (c:Context) => {
   try {
     const wordq = await c.req.json<{
       userId:number,
       examId:number
     }>();
-
+ 
     const response = await VocabModels.wordTransfertoUnlockWord(
       wordq.userId,
       wordq.examId
     )
-
+ 
     return c.json(
       {
         success: true,
@@ -80,7 +80,7 @@ export const wordTransferController = async (c:Context) => {
       },
       200
     );
-
+ 
   } catch (e) {
     return c.json(
       {
@@ -92,17 +92,17 @@ export const wordTransferController = async (c:Context) => {
     );
   }
 }
-
+ 
 export const deletedController = async (c: Context) => {
   try {
     const response = await VocabModels.deleteDatafromUserVocabUnlock()
-    
+   
     return c.json({
       success: true,
       data: response,
       msg: "Data deleted successfully",
     }, 200);
-
+ 
   } catch (e) {
     return c.json({
       success: false,
@@ -111,3 +111,4 @@ export const deletedController = async (c: Context) => {
     }, 500);
   }
 }
+ 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Book, ArrowLeft, BookOpen, Hash } from "lucide-react";
 import { useNavigate } from "react-router";
-import * as VocabAPI from "../api/vocab.api"; 
+import * as VocabAPI from "../api/vocab.api";
 
 const VocabPage = () => {
   const navigate = useNavigate();
@@ -18,20 +18,19 @@ const VocabPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const token = localStorage.getItem("token");
-      // console.log("token:", token);
       const payload = parseJwt(token);
-      // console.log("Decoded token:", parseJwt(token));
       const userId = payload ? payload.userId : null;
 
       if (userId) {
         const result = await VocabAPI.getUnlockedWordsByUser(userId);
-        // console.log(result);
+        console.log(result.data);
         if (result.success && Array.isArray(result.data) && result.data.length > 0) {
           const formattedData = result.data.map((item) => {
+            const vocab = item.UserVocabUnlockWord;
             return {
-              word: item.word,
-              meaning: item.meaning,
-              synonym: item.synonym,
+              word: vocab.word,
+              meaning: vocab.meaning,
+              synonym: vocab.synonym,
             };
           });
           setVocabData(formattedData);
@@ -44,6 +43,7 @@ const VocabPage = () => {
 
     fetchData();
   }, []);
+
 
   const handleBackToHome = () => {
     navigate("/");

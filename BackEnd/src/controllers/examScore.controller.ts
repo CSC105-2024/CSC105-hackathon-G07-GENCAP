@@ -1,7 +1,7 @@
 import type { Context } from "hono";
 import * as examScoreModel from "../models/examScore.model.ts"
+import type { examScore, addWord } from "../types/examScore.type.ts";
 import * as vocabModel from "../models/vocab.model.ts"
-import type { examScore , addWord } from "../types/examScore.type.ts";
 
 export const createExamScore = async (c: Context) => {
     try {

@@ -1,5 +1,5 @@
 import { Axios } from "../utils/axiosInstance.js";
-
+ 
 export const getUnlockedWordsByUser = async (id) => {
   try {
     const response = await Axios.get(`/vocab/${id}`);
