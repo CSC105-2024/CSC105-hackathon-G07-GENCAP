@@ -50,7 +50,7 @@ export const getExamById = async (c: Context) => {
         if (isNaN(id)) {
             return c.json({ message: 'Invalid Id' }, 400);
         }
-        const response = await examModel.getExamForUser(id);
+        const response = await examModel.getExamById(id);
         if (!response) {
             return c.json({ message: 'Exam not found' }, 404)
         }

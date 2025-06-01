@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Trophy } from "lucide-react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import * as choiceAPI from "../api/choice.api"
 import * as examScoreAPI from "../api/examScore.api"
 import * as userAPI from "../api/user.api"
+import * as examAPI from "../api/exam.api"
 
-const GameCard = ({ slangData, onBackToHome, userId, examId, difficulty }) => {
+const GameCard = ({ slangData, onBackToHome, userId, difficulty }) => {
 
   const navigate = useNavigate();
 
@@ -16,11 +17,20 @@ const GameCard = ({ slangData, onBackToHome, userId, examId, difficulty }) => {
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [answerHistory, setAnswerHistory] = useState([]);
   const [userAnswer, setUserAnswer] = useState("");
+  const [difficult, setDifficult] = useState("")
+  const { examId } = useParams()
 
 
   const currentData = slangData && slangData.length > 0 ? slangData : [];
 
-  
+  const handleFetchExamData = async () => {
+    console.log(examId);
+
+    const response = await examAPI.getExamById(examId)
+    console.log("exam", response);
+
+  }
+
   const handleNextQuestion = () => {
     if (!showResult) return;
 
@@ -41,52 +51,53 @@ const GameCard = ({ slangData, onBackToHome, userId, examId, difficulty }) => {
   };
 
   useEffect(() => {
-  const doLevelUp = async () => {
-    if (correctAnswers === currentData.length && currentData.length > 0) {
-      const response = await userAPI.levelUp(userId, correctAnswers); 
-      console.log("Level Up Triggered:", response);
-    }
-  };
-  doLevelUp();
-}, [correctAnswers, currentData.length]);
+    const doLevelUp = async () => {
+      if (correctAnswers === currentData.length && currentData.length > 0) {
+        const response = await userAPI.levelUp(userId, correctAnswers);
+        console.log("Level Up Triggered:", response);
+      }
+    };
+    doLevelUp();
+    handleFetchExamData()
+  }, [correctAnswers, currentData.length]);
 
 
   const handleAnswer = async (selectedAnswer) => {
-  if (showResult) return;
+    if (showResult) return;
 
-  const currentSlang = currentData[currentSlangIndex];
-  const isCorrect =
-    selectedAnswer.toLowerCase() === currentSlang.meaning.toLowerCase();
+    const currentSlang = currentData[currentSlangIndex];
+    const isCorrect =
+      selectedAnswer.toLowerCase() === currentSlang.meaning.toLowerCase();
 
-  const answerData = {
-    word: currentSlang.word,
-    userAnswer: selectedAnswer,
-    correctAnswer: currentSlang.meaning,
-    isCorrect,
+    const answerData = {
+      word: currentSlang.word,
+      userAnswer: selectedAnswer,
+      correctAnswer: currentSlang.meaning,
+      isCorrect,
+    };
+
+    setAnswerHistory((prev) => [...prev, answerData]);
+    setTotalQuestions((prev) => prev + 1);
+
+    if (isCorrect) {
+      setCorrectAnswers((prev) => prev + 1);
+      setScore((prev) => prev + 10);
+    }
+
+    setUserAnswer(selectedAnswer);
+    setShowResult(true);
+
+    try {
+      const response = await choiceAPI.checkChoice({
+        isTrue: isCorrect,
+        userId: Number(userId),
+        examId: Number(examId),
+      });
+
+    } catch (error) {
+      console.error("Error sending choice result:", error);
+    }
   };
-
-  setAnswerHistory((prev) => [...prev, answerData]);
-  setTotalQuestions((prev) => prev + 1);
-
-  if (isCorrect) {
-    setCorrectAnswers((prev) => prev + 1);
-    setScore((prev) => prev + 10);
-  }
-
-  setUserAnswer(selectedAnswer);
-  setShowResult(true);
-
-  try {
-    const response = await choiceAPI.checkChoice({
-      isTrue: isCorrect,
-      userId: Number(userId),
-      examId: Number(examId),
-    });
-    
-  } catch (error) {
-    console.error("Error sending choice result:", error);
-  }
-};
 
 
   const handleCancel = async () => {
@@ -96,9 +107,9 @@ const GameCard = ({ slangData, onBackToHome, userId, examId, difficulty }) => {
           userId: Number(userId),
           examId: Number(examId)
         };
-        
+
         const response = await examScoreAPI.deleteExamScore(examScoreData);
-        
+
         if (response.success) {
           console.log('Exam score deleted successfully');
         } else {
@@ -123,7 +134,18 @@ const GameCard = ({ slangData, onBackToHome, userId, examId, difficulty }) => {
     <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20">
       <div className="flex justify-between items-center mb-6">
         <div className="bg-gradient-to-r from-purple-500/80 to-pink-500/80 backdrop-blur-md rounded-xl p-3 border border-purple-300/30">
-          <h2 className="text-lg sm:text-xl font-bold text-white">{difficulty}</h2>
+          <h2 className="text-lg sm:text-xl font-bold text-white"><h2 className="text-lg sm:text-xl font-bold text-white">
+            {examId === "1"
+              ? "Beginner"
+              : examId === "2"
+                ? "Intermediate"
+                : examId === "3"
+                  ? "Advanced"
+                  : examId === "4"
+                    ? "Fluent"
+                    : "Unknown Level"}
+          </h2>
+          </h2>
         </div>
 
         <div className="bg-black/30 backdrop-blur-md border border-yellow-300/30 rounded-xl p-3 flex items-center space-x-4">

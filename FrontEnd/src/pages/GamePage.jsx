@@ -57,9 +57,7 @@ const GamePage = () => {
       <GameCard
         slangData={questions}
         userId={userId}
-        examId={examId}
         onBackToHome={handleBackToHome}
-        difficulty={difficulty}
       />
     </>
   );

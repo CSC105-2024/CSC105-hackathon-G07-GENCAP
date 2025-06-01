@@ -1,5 +1,5 @@
 import { db } from "../index.ts"
-
+ 
 export const createWord = async (word: string,meaning: string,synonym: string) => {
   const wordc = await db.word.create({
     data: {
@@ -18,10 +18,10 @@ export const createWord = async (word: string,meaning: string,synonym: string) =
       },
     },
   });
-
+ 
   return wordc;
 };
-
+ 
 export const getUnlockedWordsByUser = async (userId: number) => {
   const unlockedWords = await db.userVocabUnlock.findMany({
     where: {
@@ -31,29 +31,44 @@ export const getUnlockedWordsByUser = async (userId: number) => {
        UserVocabUnlockWord: true
     }
   })
-
+ 
+  const words = unlockedWords.map((u) => u.UserVocabUnlockWord.word)
+ 
   return unlockedWords;
 };
-
-export const wordTransfertoUnlockWord = async (userId:number,questionId:number) => {
-  const trans = await db.question.findUnique({
-    where : {
-      id:questionId
+ 
+export const wordTransfertoUnlockWord = async (userId: number, examId: number) => {
+  const questions = await db.question.findMany({
+    where: {
+      examId: examId
     },
-    select:{
+    select: {
       wordId: true
     }
-  })
-  if (!trans) {
-    throw new Error("Question not found");
+  });
+ 
+  if (!questions || questions.length === 0) {
+    throw new Error("No questions found for this exam");
   }
-  const transferWord = await db.userVocabUnlock.create({
-    data:{
+ 
+ 
+  const wordIds = questions.map(question => question.wordId);
+ 
+ 
+  const transferWords = await db.userVocabUnlock.createMany({
+    data: wordIds.map(wordId => ({
       userId,
-      wordId:trans.wordId
-    }
-  })
+      wordId
+    })),
+    skipDuplicates: true
+  });
+ 
+  return transferWords;
+};
+ 
+export const deleteDatafromUserVocabUnlock = async () => {
+  const destroy = await db.userVocabUnlock.deleteMany()
 }
-
-
-
+ 
+ 
+ 
