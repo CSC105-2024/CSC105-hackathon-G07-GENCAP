@@ -16,3 +16,20 @@ export const getExamByUserLevel = async (userId) => {
         }    
     }
 }
+
+export const getExamById = async (id) => {
+    try {
+        const response = await Axios.get(`/exams/${id}`);
+        return { 
+            success: true, 
+            data: response.data, 
+            msg: 'Exam fetched by id successfully' 
+        };
+    } catch (e) {
+        return { 
+            success: false, 
+            data: null, 
+            msg: `${e}`
+        }    
+    }
+}

@@ -1,6 +1,6 @@
 import React from "react";
 import { Trophy, RotateCcw, Home } from "lucide-react";
-import { useNavigate, useLocation } from "react-router";
+import { useNavigate, useLocation, useParams } from "react-router";
 
 const ShowResult = () => {
   const navigate = useNavigate();
@@ -11,6 +11,7 @@ const ShowResult = () => {
     totalQuestions = 0,
     answerHistory = [],
   } = location.state || {};
+  const { examId } = useParams()
 
   const percentage =
     totalQuestions === 0
@@ -18,7 +19,7 @@ const ShowResult = () => {
       : Math.round((correctAnswers / totalQuestions) * 100);
 
   const handlePlayAgain = () => {
-    navigate("/game");
+    navigate(`/game/${examId}`);
   };
   const handleBackToHome = () => {
     navigate("/");

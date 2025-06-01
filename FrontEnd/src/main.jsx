@@ -48,7 +48,7 @@ const router = createBrowserRouter([
     element: <GamePage />
   },
   {
-    path: "/result",
+    path: "/result/:examId",
     element: <ShowResult />
   }
 

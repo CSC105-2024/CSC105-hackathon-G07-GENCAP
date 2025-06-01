@@ -48,7 +48,6 @@ export const getQuestionController = async (c: Context) => {
     }
 
     const question = await getQuestion(examId, questionNumber);
-    console.log(question);
     
 
     if (!question) {

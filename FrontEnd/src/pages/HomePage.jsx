@@ -1,33 +1,44 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { User, ArrowRight, Gamepad2, Trophy, Users, Brain } from "lucide-react";
 import { useNavigate } from "react-router";
 import * as examAPI from "../api/exam.api"
+import * as examScoreAPI from "../api/examScore.api"
+import { ThemeContext } from "../contexts/auth";
+
 
 const Homepage = () => {
   const navigate = useNavigate();
-  const navigateToGame = () => {
-    navigate(`/game/${examId}`);
-  };
-  const [examId, setExamId] = useState(0);
-  function parseJwt(token) {
-    try {
-      return JSON.parse(atob(token.split(".")[1]));
-    } catch (e) {
-      return null;
+  const [examId, setExamId] = useState(null);
+  const { isAuth, userId } = useContext(ThemeContext);
+
+  const navigateToGame = async () => {
+    console.log("Start button clicked");
+
+    if (!isAuth) {
+      alert("Please log in first!");
+      return;
     }
-  }
-  const token = localStorage.getItem("token");
-  const payload = parseJwt(token);
-  const userId = payload ? payload.userId : null;
 
-  const handleFetchUserData = async () => {
-    const response = await examAPI.getExamByUserLevel(userId)
-    setExamId(response.data.data.id)
-  }
+    try {
+      const response = await examAPI.getExamByUserLevel(userId);
+      console.log("Exam fetched:", response);
 
-  useEffect(() => {
-    handleFetchUserData();
-  }, []);
+      const newExamId = response.data.data.id;
+      setExamId(newExamId)
+
+      const examscore = await examScoreAPI.createExamScore({
+        userId: userId,
+        examId: newExamId,
+      });
+
+      console.log(examscore);
+      navigate(`/game/${newExamId}`);
+    } catch (error) {
+      console.error("Failed to create exam score:", error);
+    }
+  };
+
+
 
   return (
     <div className="min-h-screen font-russo bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 relative overflow-hidden">
@@ -155,5 +166,7 @@ const Homepage = () => {
     </div>
   );
 };
+
+
 
 export default Homepage;

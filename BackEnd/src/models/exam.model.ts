@@ -32,3 +32,9 @@ export const getExamForUser = async (userId: number) => {
     }
   });
 };
+
+export const getExamById = async (id: number) => {
+    return await db.exam.findUnique({
+        where:{id}
+    })
+}
