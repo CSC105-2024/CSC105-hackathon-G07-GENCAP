@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Trophy } from "lucide-react";
 import { useNavigate } from "react-router";
-import * as questionAPI from "../api/question.api"
+import * as choiceAPI from "../api/choice.api"
+import * as examScoreAPI from "../api/examScore.api"
+import * as userAPI from "../api/user.api"
 
-const GameCard = ({ slangData, examId, onBackToHome }) => {
+const GameCard = ({ slangData, onBackToHome, userId, examId, difficulty }) => {
+
   const navigate = useNavigate();
-  console.log(examId);
 
   const [currentSlangIndex, setCurrentSlangIndex] = useState(0);
   const [showResult, setShowResult] = useState(false);
@@ -14,49 +16,11 @@ const GameCard = ({ slangData, examId, onBackToHome }) => {
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [answerHistory, setAnswerHistory] = useState([]);
   const [userAnswer, setUserAnswer] = useState("");
-  const [questions, setQuestions] = useState([]);
-
-  const handleFetchQuestionData = async () => {
-    const fetchedQuestions = [];
-    for (let i = 1; i <= 10; i++) {
-      try {
-        const response = await questionAPI.getQuestion(examId, i);
-        console.log("Fetched Question", response.data);
-
-        const q = response.data;
-        fetchedQuestions.push({
-          word: q.wordId.word,
-          meaning: q.choice,
-          alternatives: [q.choice2],
-        });
-      } catch (err) {
-        console.error(`Error fetching question ${i}`, err);
-      }
-    }
-    setQuestions(fetchedQuestions);
-  };
 
 
-  useEffect(() => {
-    handleFetchQuestionData();
-  }, []);
+  const currentData = slangData && slangData.length > 0 ? slangData : [];
 
-  const defaultSlangData = [
-    { word: "Cool", meaning: "Good", alternatives: ["Bad"] },
-    { word: "Sick", meaning: "Awesome", alternatives: ["Ill"] },
-    { word: "Lit", meaning: "Amazing", alternatives: ["Dark"] },
-    { word: "Salty", meaning: "Bitter", alternatives: ["Sweet"] },
-    { word: "Ghost", meaning: "Ignore", alternatives: ["Talk"] },
-    { word: "Stan", meaning: "Support", alternatives: ["Hate"] },
-    { word: "Tea", meaning: "Gossip", alternatives: ["Coffee"] },
-    { word: "Flex", meaning: "Show off", alternatives: ["Hide"] },
-    { word: "Vibe", meaning: "Feeling", alternatives: ["Sound"] },
-    { word: "Slay", meaning: "Excel", alternatives: ["Kill"] },
-  ];
-
-  const currentData = questions.length > 0 ? questions : defaultSlangData;
-
-
+  
   const handleNextQuestion = () => {
     if (!showResult) return;
 
@@ -65,7 +29,7 @@ const GameCard = ({ slangData, examId, onBackToHome }) => {
       setUserAnswer("");
       setShowResult(false);
     } else {
-      navigate("/result", {
+      navigate(`/result/${examId}`, {
         state: {
           score,
           correctAnswers,
@@ -76,30 +40,76 @@ const GameCard = ({ slangData, examId, onBackToHome }) => {
     }
   };
 
-  const handleAnswer = (selectedAnswer) => {
-    if (showResult) return;
-
-    const currentSlang = currentData[currentSlangIndex];
-    const isCorrect =
-      selectedAnswer.toLowerCase() === currentSlang.meaning.toLowerCase();
-
-    const answerData = {
-      word: currentSlang.word,
-      userAnswer: selectedAnswer,
-      correctAnswer: currentSlang.meaning,
-      isCorrect,
-    };
-
-    setAnswerHistory((prev) => [...prev, answerData]);
-    setTotalQuestions((prev) => prev + 1);
-
-    if (isCorrect) {
-      setCorrectAnswers((prev) => prev + 1);
-      setScore((prev) => prev + 10);
+  useEffect(() => {
+  const doLevelUp = async () => {
+    if (correctAnswers === currentData.length && currentData.length > 0) {
+      const response = await userAPI.levelUp(userId, correctAnswers); 
+      console.log("Level Up Triggered:", response);
     }
+  };
+  doLevelUp();
+}, [correctAnswers, currentData.length]);
 
-    setUserAnswer(selectedAnswer);
-    setShowResult(true);
+
+  const handleAnswer = async (selectedAnswer) => {
+  if (showResult) return;
+
+  const currentSlang = currentData[currentSlangIndex];
+  const isCorrect =
+    selectedAnswer.toLowerCase() === currentSlang.meaning.toLowerCase();
+
+  const answerData = {
+    word: currentSlang.word,
+    userAnswer: selectedAnswer,
+    correctAnswer: currentSlang.meaning,
+    isCorrect,
+  };
+
+  setAnswerHistory((prev) => [...prev, answerData]);
+  setTotalQuestions((prev) => prev + 1);
+
+  if (isCorrect) {
+    setCorrectAnswers((prev) => prev + 1);
+    setScore((prev) => prev + 10);
+  }
+
+  setUserAnswer(selectedAnswer);
+  setShowResult(true);
+
+  try {
+    const response = await choiceAPI.checkChoice({
+      isTrue: isCorrect,
+      userId: Number(userId),
+      examId: Number(examId),
+    });
+    
+  } catch (error) {
+    console.error("Error sending choice result:", error);
+  }
+};
+
+
+  const handleCancel = async () => {
+    try {
+      if (userId && examId) {
+        const examScoreData = {
+          userId: Number(userId),
+          examId: Number(examId)
+        };
+        
+        const response = await examScoreAPI.deleteExamScore(examScoreData);
+        
+        if (response.success) {
+          console.log('Exam score deleted successfully');
+        } else {
+          console.error('Failed to delete exam score:', response.msg);
+        }
+      }
+    } catch (error) {
+      console.error('Error deleting exam score:', error);
+    } finally {
+      onBackToHome();
+    }
   };
 
   const getAnswerOptions = () => {
@@ -113,7 +123,7 @@ const GameCard = ({ slangData, examId, onBackToHome }) => {
     <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20">
       <div className="flex justify-between items-center mb-6">
         <div className="bg-gradient-to-r from-purple-500/80 to-pink-500/80 backdrop-blur-md rounded-xl p-3 border border-purple-300/30">
-          <h2 className="text-lg sm:text-xl font-bold text-white">Beginner</h2>
+          <h2 className="text-lg sm:text-xl font-bold text-white">{difficulty}</h2>
         </div>
 
         <div className="bg-black/30 backdrop-blur-md border border-yellow-300/30 rounded-xl p-3 flex items-center space-x-4">
@@ -180,7 +190,7 @@ const GameCard = ({ slangData, examId, onBackToHome }) => {
 
       <div className="flex justify-between">
         <button
-          onClick={onBackToHome}
+          onClick={handleCancel}
           className="px-6 py-3 bg-red-500/70 hover:bg-red-500 text-white font-semibold rounded-xl transition-all duration-300"
         >
           Cancel

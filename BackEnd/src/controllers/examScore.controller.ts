@@ -14,8 +14,8 @@ export const createExamScore = async (c: Context) => {
         return c.json({
             success: true,
             data: response,
-            msg: "Exam score created successful"
-        }, 200)
+            msg: "Score has been reset to 0"
+        }, 200);
     } catch (e) {
         return c.json({
             success: false,
@@ -24,6 +24,8 @@ export const createExamScore = async (c: Context) => {
         }, 500);
     }
 }
+
+
 
 export const getExamScore = async (c: Context) => {
     try {
@@ -45,7 +47,17 @@ export const getExamScore = async (c: Context) => {
 
 export const deleteExamScore = async(c: Context) => {
     try {
-        const examScoreData = await c.req.json<examScore>()        
+        const examScoreData = await c.req.json<examScore>()
+        console.log('Received examScoreData:', examScoreData);
+        
+        if (!examScoreData.userId || !examScoreData.examId) {
+            return c.json({
+                success: false,
+                data: null,
+                msg: "userId and examId are required"
+            }, 400);
+        }
+        
         const response = await examScoreModel.deleteExamScore(examScoreData)
         return c.json({
             success: true,
@@ -53,6 +65,7 @@ export const deleteExamScore = async(c: Context) => {
             msg: "Exam score deleted successful"
         }, 200)
     } catch (e) {
+        console.error('Delete exam score error:', e);
         return c.json({
             success: false,
             data: null,

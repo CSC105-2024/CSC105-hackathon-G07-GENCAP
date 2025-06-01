@@ -5,7 +5,6 @@ export const createExam = async (c: Context) => {
     try {
         const body = await c.req.json<{ difficult: string }>()
         const response = await examModel.createExam(body.difficult);
-        console.log(response);
         
         return c.json({
             success: true,
@@ -35,6 +34,30 @@ export const getExamByUserLevel = async (c: Context) => {
             success: true,
             data: response,
             msg: "Exam fetch by user language level successful"
+        }, 200)
+    } catch (e) {
+        return c.json({
+            success: false,
+            data: null,
+            msg: `Internal Server Error: ${e}`,
+        }, 500);
+    }
+}
+
+export const getExamById = async (c: Context) => {
+    try {
+        const id = parseInt(c.req.param("id"))
+        if (isNaN(id)) {
+            return c.json({ message: 'Invalid Id' }, 400);
+        }
+        const response = await examModel.getExamForUser(id);
+        if (!response) {
+            return c.json({ message: 'Exam not found' }, 404)
+        }
+        return c.json({
+            success: true,
+            data: response,
+            msg: "Exam fetch by id successful"
         }, 200)
     } catch (e) {
         return c.json({
