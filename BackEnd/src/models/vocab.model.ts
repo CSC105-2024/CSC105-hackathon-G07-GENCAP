@@ -51,9 +51,7 @@ export const wordTransfertoUnlockWord = async (userId: number, examId: number) =
     throw new Error("No questions found for this exam");
   }
 
-
   const wordIds = questions.map(question => question.wordId);
-
 
   const transferWords = await db.userVocabUnlock.createMany({
     data: wordIds.map(wordId => ({
