@@ -32,28 +32,42 @@ export const getUnlockedWordsByUser = async (userId: number) => {
     }
   })
 
+  const words = unlockedWords.map((u) => u.UserVocabUnlockWord.word)
+
   return unlockedWords;
 };
 
-export const wordTransfertoUnlockWord = async (userId:number,questionId:number) => {
-  const trans = await db.question.findUnique({
-    where : {
-      id:questionId
+export const wordTransfertoUnlockWord = async (userId: number, examId: number) => {
+  const questions = await db.question.findMany({
+    where: {
+      examId: examId 
     },
-    select:{
+    select: {
       wordId: true
     }
-  })
-  if (!trans) {
-    throw new Error("Question not found");
-  }
-  const transferWord = await db.userVocabUnlock.create({
-    data:{
-      userId,
-      wordId:trans.wordId
-    }
-  })
-}
+  });
 
+  if (!questions || questions.length === 0) {
+    throw new Error("No questions found for this exam");
+  }
+
+
+  const wordIds = questions.map(question => question.wordId);
+
+
+  const transferWords = await db.userVocabUnlock.createMany({
+    data: wordIds.map(wordId => ({
+      userId,
+      wordId
+    })),
+    skipDuplicates: true
+  });
+
+  return transferWords;
+};
+
+export const deleteDatafromUserVocabUnlock = async () => {
+  const destroy = await db.userVocabUnlock.deleteMany()
+}
 
 

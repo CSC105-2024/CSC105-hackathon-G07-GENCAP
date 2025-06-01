@@ -6,5 +6,5 @@ export type examScore = {
 
 export type addWord = {
     userId : number
-    questionId : number
+    examId : number
 }

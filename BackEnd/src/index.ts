@@ -9,7 +9,7 @@ export const db = new PrismaClient()
 
 app.use(
   cors({
-    origin: ['http://localhost:5173'], //frontend application
+    origin: ['http://localhost:5174'], //frontend application
   })
 );
 

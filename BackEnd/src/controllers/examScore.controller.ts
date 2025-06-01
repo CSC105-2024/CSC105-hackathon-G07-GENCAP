@@ -1,11 +1,16 @@
 import type { Context } from "hono";
 import * as examScoreModel from "../models/examScore.model.ts"
-import type { examScore } from "../types/examScore.type.ts";
+import * as vocabModel from "../models/vocab.model.ts"
+import type { examScore , addWord } from "../types/examScore.type.ts";
 
 export const createExamScore = async (c: Context) => {
     try {
         const examScoreData = await c.req.json<examScore>()
+        const addUnlockWord = await c.req.json<addWord>()
         const response = await examScoreModel.createExamScore(examScoreData)
+        if (response) {
+            await vocabModel.wordTransfertoUnlockWord(addUnlockWord.userId,addUnlockWord.examId)        
+        }
         return c.json({
             success: true,
             data: response,

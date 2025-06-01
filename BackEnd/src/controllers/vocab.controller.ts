@@ -64,12 +64,12 @@ export const wordTransferController = async (c:Context) => {
   try {
     const wordq = await c.req.json<{
       userId:number,
-      questionId:number
+      examId:number
     }>();
 
     const response = await VocabModels.wordTransfertoUnlockWord(
       wordq.userId,
-      wordq.questionId
+      wordq.examId
     )
 
     return c.json(
@@ -93,5 +93,21 @@ export const wordTransferController = async (c:Context) => {
   }
 }
 
+export const deletedController = async (c: Context) => {
+  try {
+    const response = await VocabModels.deleteDatafromUserVocabUnlock()
+    
+    return c.json({
+      success: true,
+      data: response,
+      msg: "Data deleted successfully",
+    }, 200);
 
-
+  } catch (e) {
+    return c.json({
+      success: false,
+      data: null,
+      msg: `Internal Server Error: ${e}`,
+    }, 500);
+  }
+}
