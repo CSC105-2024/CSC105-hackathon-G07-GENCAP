@@ -10,8 +10,6 @@ export const checkChoice = async (c: Context) => {
         const choiceId = parseInt(c.req.param("choiceId"))
         const examScoreData = await c.req.json<examScore>()
 
- 
-       
         const response = await choiceModel.checkChoice(choiceId)
         if (response) {
             await examScoreModel.increaseScore(examScoreData)
